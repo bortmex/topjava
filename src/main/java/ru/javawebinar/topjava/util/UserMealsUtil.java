@@ -10,8 +10,6 @@ import java.time.Month;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toMap;
-
 /**
  * GKislin
  * 31.05.2015.
@@ -36,15 +34,12 @@ public class UserMealsUtil {
 
         Map<LocalDate, IntSummaryStatistics> mealListMedium = mealList
                 .stream().distinct()
-                .collect(Collectors.groupingBy((p)-> p.getDateTime().toLocalDate(), Collectors.summarizingInt(UserMeal::getCalories)));
+                .collect(Collectors.groupingBy((p) -> p.getDateTime().toLocalDate(), Collectors.summarizingInt(UserMeal::getCalories)));
 
-        List<UserMealWithExceed> userMealWithExceedMedium = mealList
-                .stream().map(p->new UserMealWithExceed(p.getDateTime(), p.getDescription(), p.getCalories(), mealListMedium.get(p.getDateTime().toLocalDate()).getSum() < caloriesPerDay))
-                .collect(Collectors.toList());
-
-        return userMealWithExceedMedium
+        return mealList
                 .stream()
                 .filter(x -> TimeUtil.isBetween(x.getDateTime().toLocalTime(), startTime, endTime))
+                .map(p -> new UserMealWithExceed(p.getDateTime(), p.getDescription(), p.getCalories(), mealListMedium.get(p.getDateTime().toLocalDate()).getSum() < caloriesPerDay))
                 .collect(Collectors.toList());
     }
 }
