@@ -37,7 +37,7 @@ public class UserMealsUtil {
                         mealList
                                 .stream()
                                 .collect(Collectors.groupingBy((t) -> t.getDateTime().toLocalDate(), Collectors.summarizingInt(UserMeal::getCalories)))
-                                .get(p.getDateTime().toLocalDate()).getSum() > caloriesPerDay))
+                                .get(p.getDateTime().toLocalDate()).getSum() < caloriesPerDay))
                 .collect(Collectors.toList());
     }
 }
