@@ -26,31 +26,11 @@ public class UserMealsUtil {
         List<UserMealWithExceed> userMealWithExceedList = getFilteredWithExceeded(mealList, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000);
 // .toLocalDate();
 // .toLocalTime();
-        System.out.println(userMealWithExceedList);
     }
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
-
-        Map<LocalDate, Integer> mealListMedium = mealList
-                .stream()
-                .collect(HashMap<LocalDate, Integer>::new, (m, c) -> m.put(c.getDateTime().toLocalDate(), 0), (m, u) -> {
-                });
-
-        mealList
-                .stream()
-                .collect(() -> mealListMedium, (list, item) -> list.put(item.getDateTime().toLocalDate(), list.get(item.getDateTime().toLocalDate()) + item.getCalories()), Map::putAll);
-
-        List<UserMealWithExceed> userMealWithExceedMedium = mealList
-                .stream()
-                .collect(ArrayList<UserMealWithExceed>::new, (m, c) -> m.add(new UserMealWithExceed(c.getDateTime(), c.getDescription(), c.getCalories(), mealListMedium.get(c.getDateTime().toLocalDate()) < caloriesPerDay)), (m, u) -> {
-                });
-
-
-        return userMealWithExceedMedium
-                .stream()
-                .filter(p -> TimeUtil.isBetween(p.getDateTime().toLocalTime(), startTime, endTime))
-                .collect(ArrayList<UserMealWithExceed>::new, ArrayList::add, (m, u) -> {
-                });
+        // TODO return List with correctly exceeded field
+        return null;
     }
 
 }
