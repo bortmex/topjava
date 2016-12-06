@@ -8,6 +8,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
 
 /**
  * GKislin
@@ -31,26 +34,17 @@ public class UserMealsUtil {
 
     public static List<UserMealWithExceed> getFilteredWithExceeded(List<UserMeal> mealList, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
 
-        Map<LocalDate, Integer> mealListMedium = mealList
-                .stream()
-                .collect(HashMap<LocalDate, Integer>::new, (m, c) -> m.put(c.getDateTime().toLocalDate(), 0), (m, u) -> {
-                });
-
-        mealList
-                .stream()
-                .collect(() -> mealListMedium, (list, item) -> list.put(item.getDateTime().toLocalDate(), list.get(item.getDateTime().toLocalDate()) + item.getCalories()), Map::putAll);
+        Map<LocalDate, IntSummaryStatistics> mealListMedium = mealList
+                .stream().distinct()
+                .collect(Collectors.groupingBy((p)-> p.getDateTime().toLocalDate(), Collectors.summarizingInt(UserMeal::getCalories)));
 
         List<UserMealWithExceed> userMealWithExceedMedium = mealList
-                .stream()
-                .collect(ArrayList<UserMealWithExceed>::new, (m, c) -> m.add(new UserMealWithExceed(c.getDateTime(), c.getDescription(), c.getCalories(), mealListMedium.get(c.getDateTime().toLocalDate()) < caloriesPerDay)), (m, u) -> {
-                });
-
+                .stream().map(p->new UserMealWithExceed(p.getDateTime(), p.getDescription(), p.getCalories(), mealListMedium.get(p.getDateTime().toLocalDate()).getSum() < caloriesPerDay))
+                .collect(Collectors.toList());
 
         return userMealWithExceedMedium
                 .stream()
                 .filter(x -> TimeUtil.isBetween(x.getDateTime().toLocalTime(), startTime, endTime))
-                .collect(ArrayList<UserMealWithExceed>::new, ArrayList::add, (m, u) -> {
-                });
+                .collect(Collectors.toList());
     }
-
 }
