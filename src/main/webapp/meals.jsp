@@ -24,6 +24,7 @@
             <td style="width: 80px;">Калории</td>
             <%--<td style="width: 80px;">action</td>
             <td style="width: 80px;">action</td>--%>
+
         </tr>
         </thead>
 
