@@ -30,12 +30,12 @@
         <c:forEach var="meal" items="${list}">
 
             <tr>
-                <c:if test="${meal.isExceed()==true}"> <td bgcolor="red"> ${meal.getDateTime()}</td></c:if>
-                <c:if test="${meal.isExceed()==false}"> <td bgcolor="#adff2f" > ${meal.getDateTime()}</td></c:if>
-                <c:if test="${meal.isExceed()==true}"> <td bgcolor="red"> ${meal.getDescription()}</td></c:if>
-                <c:if test="${meal.isExceed()==false}"> <td bgcolor="#adff2f" > ${meal.getDescription()}</td></c:if>
-                <c:if test="${meal.isExceed()==true}"> <td bgcolor="red"> ${meal.getCalories()}</td></c:if>
-                <c:if test="${meal.isExceed()==false}"> <td bgcolor="#adff2f" > ${meal.getCalories()}</td></c:if>
+                <c:if test="${meal.isExceed()==false}"> <td bgcolor="red"> ${meal.getDateTime()}</td></c:if>
+                <c:if test="${meal.isExceed()==true}"> <td bgcolor="#adff2f" > ${meal.getDateTime()}</td></c:if>
+                <c:if test="${meal.isExceed()==false}"> <td bgcolor="red"> ${meal.getDescription()}</td></c:if>
+                <c:if test="${meal.isExceed()==true}"> <td bgcolor="#adff2f" > ${meal.getDescription()}</td></c:if>
+                <c:if test="${meal.isExceed()==false}"> <td bgcolor="red"> ${meal.getCalories()}</td></c:if>
+                <c:if test="${meal.isExceed()==true}"> <td bgcolor="#adff2f" > ${meal.getCalories()}</td></c:if>
                 <%--<td><a href="<c:url value='/edit/${users.id}'/>">Edit</a></td>
                 <td><a href="<c:url value='/remove/${users.id}'/>">Delete</a></td>--%>
             </tr>
