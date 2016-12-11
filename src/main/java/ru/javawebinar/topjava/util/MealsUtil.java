@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -51,7 +52,9 @@ public class MealsUtil {
         final List<MealWithExceed> mealsWithExceeded = new ArrayList<>();
         meals.forEach(meal -> {
             if (TimeUtil.isBetween(meal.getTime(), startTime, endTime)) {
-                mealsWithExceeded.add(createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay));
+                MealWithExceed mwe = createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay);
+                mwe.setId(new AtomicInteger(mealsWithExceeded.size()+1));
+                mealsWithExceeded.add(mwe);
             }
         });
         return mealsWithExceeded;
