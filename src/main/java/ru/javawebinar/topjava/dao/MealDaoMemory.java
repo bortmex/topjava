@@ -68,11 +68,8 @@ public class MealDaoMemory implements MealDao{
 
     @Override
     public void remove(int id) {
-
-        int i =0;
         for (Meal meal:listMeals) {
-            if(meal.getId()==id) {listMeals.remove(i);break;}
-                i++;
+            if(meal.getId()==id) {listMeals.remove(meal);break;}
         }
     }
 
