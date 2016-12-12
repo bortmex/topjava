@@ -1,6 +1,8 @@
 package ru.javawebinar.topjava.dao;
 
 import ru.javawebinar.topjava.model.Meal;
+
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -15,7 +17,7 @@ public interface MealDao {
 
     public Meal getById(int id);
 
-    public CopyOnWriteArrayList<Meal> list();
+    public List<Meal> list();
 
-    public CopyOnWriteArrayList<Meal> queryFindByName(String name);
+    public List<Meal> queryFindByName(String name);
 }

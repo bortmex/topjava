@@ -69,8 +69,8 @@ public class MealDaoMemory implements MealDao{
     }
 
     @Override
-    public CopyOnWriteArrayList<Meal> list() {
-        CopyOnWriteArrayList<Meal> list = new CopyOnWriteArrayList<>();
+    public List<Meal> list() {
+        List<Meal> list = new ArrayList<>();
         for (Map.Entry<Integer,Meal> meal:listMeals.entrySet()) {
             meal.getValue().setId(meal.getKey());
             list.add(meal.getValue());
@@ -79,7 +79,7 @@ public class MealDaoMemory implements MealDao{
     }
 
     @Override
-    public CopyOnWriteArrayList<Meal> queryFindByName(String name) {
+    public List<Meal> queryFindByName(String name) {
         return null;
     }
 }
