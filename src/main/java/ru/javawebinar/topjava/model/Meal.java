@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Meal {
 
-    private AtomicInteger id;
+    private int id;
 
     private final LocalDateTime dateTime;
 
@@ -25,11 +25,11 @@ public class Meal {
         this.calories = calories;
     }
 
-    public AtomicInteger getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(AtomicInteger id) {
+    public void setId(int id) {
         this.id = id;
     }
 

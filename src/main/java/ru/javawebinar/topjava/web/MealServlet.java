@@ -59,7 +59,7 @@ public class MealServlet  extends HttpServlet {
             forward = INSERT_OR_EDIT;
             int userId = Integer.parseInt(request.getParameter("mealId"));
             Meal meal = mealDao.getById(userId);
-            mealDao.remove(Integer.parseInt(meal.getId().toString()));
+            mealDao.remove(meal.getId());
             request.setAttribute("meal", meal);
         } else if (action.equalsIgnoreCase("listMeal")){
             forward = LIST_MEAL;
@@ -94,7 +94,7 @@ public class MealServlet  extends HttpServlet {
         }
         else
         {
-            meal.setId(new AtomicInteger(Integer.parseInt(mealId)));
+            meal.setId(Integer.parseInt(mealId));
             mealDao.update(meal);
         }
         RequestDispatcher view = req.getRequestDispatcher(LIST_MEAL);

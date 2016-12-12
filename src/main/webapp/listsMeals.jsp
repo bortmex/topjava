@@ -20,7 +20,6 @@
 
         <thead>
         <tr style="background-color: gray;">
-            <td style="width: 10px;">ID</td>
             <td style="width: 30px;">Время</td>
             <td style="width: 80px;">Наименование</td>
             <td style="width: 80px;">Калории</td>
@@ -29,16 +28,7 @@
         </thead>
 
         <c:forEach var="meal" items="${list}">
-            <tr
-            <c:choose>
-                <c:when test="${meal.isExceed()==true}">
-                    bgcolor="red"
-                </c:when>
-                <c:when test="${meal.isExceed()==false}">
-                    bgcolor="#adff2f"
-                </c:when>
-            </c:choose> >
-                <td> ${meal.id}</td>
+            <tr  bgcolor="${meal.isExceed() ? "red" : "#adff2f"}" >
                 <td><c:out value="${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}"/></td>
                 <td> ${meal.description}</td>
                 <td> ${meal.calories}</td>

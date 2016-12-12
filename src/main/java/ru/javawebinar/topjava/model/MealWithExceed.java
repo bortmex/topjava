@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class MealWithExceed {
 
-    private AtomicInteger id;
+    private int id;
 
     private final LocalDateTime dateTime;
 
@@ -43,11 +43,11 @@ public class MealWithExceed {
         this.exceed = exceed;
     }
 
-    public AtomicInteger getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(AtomicInteger id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -16,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class MealDaoMemory implements MealDao{
 
-    private List<Meal> listMeals =  new ArrayList<>();
+    private CopyOnWriteArrayList<Meal> listMeals =  new CopyOnWriteArrayList<>();
     public MealDaoMemory() {
         listMeals.add(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
         setIdDefaltGeneration();
@@ -35,13 +36,13 @@ public class MealDaoMemory implements MealDao{
 
     private void setIdDefaltGeneration(){
         Meal meal = list().get(listMeals.size()-1);
-        meal.setId(new AtomicInteger(listMeals.size()));
+        meal.setId(listMeals.size());
     }
 
     private int getArrayId(){
         int[] arrId = new int[listMeals.size()];
         for (int i = 0; i < listMeals.size(); i++) {
-            arrId[i] = Integer.parseInt(listMeals.get(i).getId().toString());
+            arrId[i] = listMeals.get(i).getId();
         }
         Arrays.sort(arrId);
         int number = arrId.length;
@@ -58,14 +59,14 @@ public class MealDaoMemory implements MealDao{
 
     @Override
     public void add(Meal users) {
-        users.setId(new AtomicInteger(getArrayId()));
+        users.setId(getArrayId());
         listMeals.add(users);
     }
 
     @Override
     public void update(Meal meal) {
-        AtomicInteger id= meal.getId();
-        remove(Integer.parseInt(meal.getId().toString()));
+        int id= meal.getId();
+        remove(meal.getId());
         meal.setId(id);
         listMeals.add(meal);
     }
@@ -75,7 +76,7 @@ public class MealDaoMemory implements MealDao{
 
         int i =0;
         for (Meal meal:listMeals) {
-            if(meal.getId().floatValue()==new AtomicInteger(id).floatValue()) {listMeals.remove(i);break;}
+            if(meal.getId()==id) {listMeals.remove(i);break;}
                 i++;
         }
     }
@@ -84,7 +85,7 @@ public class MealDaoMemory implements MealDao{
     public Meal getById(int id) {
         int i =0;
         for (Meal meal:listMeals) {
-            if(meal.getId().floatValue()==new AtomicInteger(id).floatValue()) return listMeals.get(i);
+            if(meal.getId()==id) return listMeals.get(i);
             i++;
         }
         return null;
