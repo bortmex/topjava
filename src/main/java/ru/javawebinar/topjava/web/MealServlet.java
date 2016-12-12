@@ -7,6 +7,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -32,62 +34,71 @@ import static org.slf4j.LoggerFactory.getLogger;
 public class MealServlet  extends HttpServlet {
 
     private static final Logger LOG = getLogger(MealServlet.class);
-    private MealDao mealDao = new MealDaoMemory();
-    private static String INSERT_OR_EDIT = "/user.jsp";
-    private static String LIST_MEAL = "/listUser.jsp";
+    private MealDao mealDao;
+    private static final long serialVersionUID = 1L;
+    private static String INSERT_OR_EDIT = "mealEdit.jsp";
+    private static String LIST_MEAL = "listsMeals.jsp";
+
+    public MealServlet() {
+        super();
+        this.mealDao = new MealDaoMemory();
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         LOG.debug("redirect to meals");
-
+        request.setCharacterEncoding("UTF-8");
         String forward="";
         String action = request.getParameter("action");
-
-        if ("delete".equalsIgnoreCase(action)) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            mealDao.remove(id);
+        if (action != null && !action.isEmpty()){
+            if (action.equalsIgnoreCase("delete")){
+            int userId = Integer.parseInt(request.getParameter("mealId"));
+            mealDao.remove(userId);
             forward = LIST_MEAL;
-            request.setAttribute("meals", MealsUtil.getFilteredWithExceeded(mealDao.list(), LocalTime.MIN, LocalTime.MAX, 2000));
-        } else if ("insert".equalsIgnoreCase(action)) {
+            request.setAttribute("list", MealsUtil.getFilteredWithExceededByCycle(mealDao.list(), LocalTime.MIN, LocalTime.MAX,2000));
+        } else if (action.equalsIgnoreCase("edit")){
             forward = INSERT_OR_EDIT;
-            Meal meal = new Meal(LocalDateTime.now().withNano(0).withSecond(0), "", 0);
+            int userId = Integer.parseInt(request.getParameter("mealId"));
+            Meal meal = mealDao.getById(userId);
+            mealDao.remove(Integer.parseInt(meal.getId().toString()));
             request.setAttribute("meal", meal);
-        } else if ("edit".equalsIgnoreCase(action)) {
+        } else if (action.equalsIgnoreCase("listMeal")){
+            forward = LIST_MEAL;
+            request.setAttribute("list", MealsUtil.getFilteredWithExceededByCycle(mealDao.list(), LocalTime.MIN, LocalTime.MAX,2000));
+        } else {
             forward = INSERT_OR_EDIT;
-            int id = Integer.parseInt(request.getParameter("id"));
-            Meal meal = mealDao.getById(id);
-            request.setAttribute("meal", meal);
+        }}
+        else {
+            forward = LIST_MEAL;
         }
-
-
-        request.setAttribute("list", MealsUtil.getFilteredWithExceededByCycle(mealDao.list(), LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
-        request.getRequestDispatcher("meals.jsp").forward(request, response);
-        //response.sendRedirect("meals.jsp");
+        /*RequestDispatcher view = request.getRequestDispatcher(forward);
+        view.forward(request, response);*/
+        request.setAttribute("list", MealsUtil.getFilteredWithExceededByCycle(mealDao.list(), LocalTime.MIN, LocalTime.MAX,2000));
+        request.getRequestDispatcher(forward).forward(request, response);
+        //response.sendRedirect("listsMeals.jsp");
     }
 
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Meal meal = null;
+        Meal meal;
+        req.setCharacterEncoding("UTF-8");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter
+                .ofPattern("HH:mm:ss MM/dd/uuuu", Locale.US)
+                .withResolverStyle(ResolverStyle.STRICT);
+        LocalDateTime date = LocalDateTime.parse(req.getParameter("dob"), dateTimeFormatter);
+        meal = new Meal(LocalDateTime.of(date.toLocalDate(), date.toLocalTime()), req.getParameter("mealdescription"), Integer.parseInt(req.getParameter("calories")));
 
-        String forward="";
-        String action = req.getParameter("action");
-
-        /*if (action.equalsIgnoreCase("delete")){
-            int mealId = Integer.parseInt(req.getParameter("mealId"));
-            mealDao.remove(mealId);
-        } else if (action.equalsIgnoreCase("edit")){
-            int mealId = Integer.parseInt(req.getParameter("mealId"));
-            Meal user = mealDao.getById(mealId);
-        }  else if(action.equalsIgnoreCase(req.getParameter("frmAddMeal"))) {*/
-
-            req.setCharacterEncoding("UTF-8");
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter
-                    .ofPattern("HH:mm:ss MM/dd/uuuu", Locale.US)
-                    .withResolverStyle(ResolverStyle.STRICT);
-            LocalDateTime date = LocalDateTime.parse(req.getParameter("dob"), dateTimeFormatter);
-            meal = new Meal(LocalDateTime.of(date.toLocalDate(), date.toLocalTime()), req.getParameter("mealdescription"), Integer.parseInt(req.getParameter("calories")));
+        String mealId = req.getParameter("mealId");
+        if(mealId == null || mealId.isEmpty())
+        {
             mealDao.add(meal);
-
-        req.setAttribute("list", MealsUtil.getFilteredWithExceededByCycle(mealDao.list(), LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
-        req.getRequestDispatcher("meals.jsp").forward(req,resp);
+        }
+        else
+        {
+            meal.setId(new AtomicInteger(Integer.parseInt(mealId)));
+            mealDao.update(meal);
+        }
+        RequestDispatcher view = req.getRequestDispatcher(LIST_MEAL);
+        req.setAttribute("list", MealsUtil.getFilteredWithExceededByCycle(mealDao.list(), LocalTime.MIN, LocalTime.MAX,2000));
+        view.forward(req, resp);
     }
 }

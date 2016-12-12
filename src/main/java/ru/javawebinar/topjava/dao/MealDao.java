@@ -8,9 +8,9 @@ import java.util.List;
  * Created by Галина on 10.12.2016.
  */
 public interface MealDao {
-    public void add(Meal users);
+    public void add(Meal meal);
 
-    public void update(Meal users);
+    public void update(Meal meal);
 
     public void remove(int id);
 
