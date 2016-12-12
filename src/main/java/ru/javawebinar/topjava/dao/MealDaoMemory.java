@@ -78,10 +78,8 @@ public class MealDaoMemory implements MealDao{
 
     @Override
     public Meal getById(int id) {
-        int i =0;
         for (Meal meal:listMeals) {
-            if(meal.getId()==id) return listMeals.get(i);
-            i++;
+            if(meal.getId()==id) return meal;
         }
         return null;
     }
