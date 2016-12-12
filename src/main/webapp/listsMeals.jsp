@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="f" uri="http://topjava.javawebinar.ru/functions" %>
 <html>
 <head>
     <title>Meals list</title>
@@ -29,7 +30,7 @@
 
         <c:forEach var="meal" items="${list}">
             <tr  bgcolor="${meal.isExceed() ? "red" : "#adff2f"}" >
-                <td><c:out value="${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}"/></td>
+                <td><c:out value="${f:formatLocalDateTime(meal.dateTime, 'HH:mm:ss MM/dd/uuuu')}"/></td>
                 <td> ${meal.description}</td>
                 <td> ${meal.calories}</td>
                 <td><a href="meal?action=edit&mealId=<c:out value="${meal.id}"/>">Update</a></td>

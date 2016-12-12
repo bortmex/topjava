@@ -20,23 +20,19 @@ public class MealDaoMemory implements MealDao{
     private CopyOnWriteArrayList<Meal> listMeals =  new CopyOnWriteArrayList<>();
     public MealDaoMemory() {
         listMeals.add(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
-        setIdDefaltGeneration();
         listMeals.add(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 13, 0), "Обед", 1000));
-        setIdDefaltGeneration();
         listMeals.add(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 20, 0), "Ужин", 500));
-        setIdDefaltGeneration();
         listMeals.add(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 10, 0), "Завтрак", 1000));
-        setIdDefaltGeneration();
         listMeals.add(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 13, 0), "Обед", 500));
-        setIdDefaltGeneration();
         listMeals.add(new Meal(LocalDateTime.of(2015, Month.MAY, 31, 20, 0), "Ужин", 510));
         setIdDefaltGeneration();
-
     }
 
     private void setIdDefaltGeneration(){
-        Meal meal = list().get(listMeals.size()-1);
-        meal.setId(listMeals.size());
+        for (int i = 0; i < list().size(); i++) {
+            Meal meal = list().get(i);
+            meal.setId(i+1);
+        }
     }
 
     private int getArrayId(){
@@ -48,7 +44,6 @@ public class MealDaoMemory implements MealDao{
         int number = arrId.length;
 
         int j = 1;
-        System.out.println(Arrays.toString(arrId));
         for (int i = 0; i < arrId.length; i++) {
             if(arrId[i]!=j) {number = j; break;}
             j++;

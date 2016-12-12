@@ -81,10 +81,7 @@ public class MealServlet  extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Meal meal;
         req.setCharacterEncoding("UTF-8");
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter
-                .ofPattern("HH:mm:ss MM/dd/uuuu", Locale.US)
-                .withResolverStyle(ResolverStyle.STRICT);
-        LocalDateTime date = LocalDateTime.parse(req.getParameter("dob"), dateTimeFormatter);
+        LocalDateTime date = LocalDateTime.parse(req.getParameter("dob"));
         meal = new Meal(LocalDateTime.of(date.toLocalDate(), date.toLocalTime()), req.getParameter("mealdescription"), Integer.parseInt(req.getParameter("calories")));
 
         String mealId = req.getParameter("mealId");

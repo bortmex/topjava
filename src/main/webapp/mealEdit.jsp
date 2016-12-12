@@ -25,8 +25,8 @@
 
 <form method="POST" action='meal' name="frmAddMeal">
 
-    DATE ("HH:mm:ss MM/dd/uuuu") : <input
-        type="datetime" name="dob"
+    DATE : <input
+        type="datetime-local" name="dob"
         value="${meal.dateTime}" /> <br />
 
     Description : <input type="text" name="mealdescription"
