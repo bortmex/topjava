@@ -26,21 +26,12 @@ public class MealDaoMemory implements MealDao{
     }
 
     private int getArrayId(){
-        int[] arrId = new int[listMeals.size()];
-        for (int i = 0; i < listMeals.size(); i++) {
-            arrId[i] = list().get(i).getId();
+        Iterator<Map.Entry<Integer,Meal>> iter = listMeals.entrySet().iterator();
+        Map.Entry<Integer,Meal> entry = null;
+        while(iter.hasNext()) {
+            entry = iter.next();
         }
-
-        Arrays.sort(arrId);
-        int number = arrId.length;
-
-        int j = 1;
-        for (int i = 0; i < arrId.length; i++) {
-            if(arrId[i]!=j) {number = j; break;}
-            j++;
-        }
-
-        return number;
+        return entry.getValue().getId()+1;
     }
 
     @Override
@@ -62,10 +53,7 @@ public class MealDaoMemory implements MealDao{
 
     @Override
     public Meal getById(int id) {
-        for (Map.Entry<Integer,Meal> meal:listMeals.entrySet()) {
-            if(meal.getKey()==id) return meal.getValue();
-        }
-        return null;
+        return listMeals.get(id);
     }
 
     @Override

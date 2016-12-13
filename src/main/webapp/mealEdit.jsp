@@ -25,6 +25,9 @@
 
 <form method="POST" action='meal' name="frmAddMeal">
 
+    <input type="text" readonly="readonly" name="mealId"
+                     value="<c:out value="${meal.id}" />" /> <br />
+
     DATE : <input
         type="datetime-local" name="dob"
         value="${meal.dateTime}" /> <br />

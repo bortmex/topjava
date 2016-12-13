@@ -59,7 +59,6 @@ public class MealServlet  extends HttpServlet {
             forward = INSERT_OR_EDIT;
             int userId = Integer.parseInt(request.getParameter("mealId"));
             Meal meal = mealDao.getById(userId);
-            mealDao.remove(meal.getId());
             request.setAttribute("meal", meal);
         } else if (action.equalsIgnoreCase("listMeal")){
             forward = LIST_MEAL;
