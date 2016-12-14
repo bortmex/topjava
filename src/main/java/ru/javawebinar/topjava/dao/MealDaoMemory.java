@@ -31,7 +31,6 @@ public class MealDaoMemory implements MealDao{
 
     @Override
     public Integer getArrayId(){
-
         return index.get();
     }
 

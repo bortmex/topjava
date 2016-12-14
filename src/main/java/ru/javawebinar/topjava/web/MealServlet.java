@@ -54,6 +54,7 @@ public class MealServlet  extends HttpServlet {
             int userId = Integer.parseInt(request.getParameter("mealId"));
             mealDao.remove(userId);
             forward = LIST_MEAL;
+                //response.sendRedirect("meal");
             request.setAttribute("list", MealsUtil.getFilteredWithExceededByCycle(mealDao.list(), LocalTime.MIN, LocalTime.MAX,2000));
         } else if (action.equalsIgnoreCase("edit")){
             forward = INSERT_OR_EDIT;

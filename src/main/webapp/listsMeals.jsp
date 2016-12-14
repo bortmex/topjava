@@ -21,7 +21,6 @@
 
         <thead>
         <tr style="background-color: gray;">
-            <td style="width: 30px;">АЙДИ</td>
             <td style="width: 30px;">Время</td>
             <td style="width: 80px;">Наименование</td>
             <td style="width: 80px;">Калории</td>
@@ -31,7 +30,6 @@
 
         <c:forEach var="meal" items="${list}">
             <tr  bgcolor="${meal.isExceed() ? "red" : "#adff2f"}" >
-                <td> ${meal.id}</td>
                 <td><c:out value="${f:formatLocalDateTime(meal.dateTime, 'HH:mm:ss MM/dd/uuuu')}"/></td>
                 <td> ${meal.description}</td>
                 <td> ${meal.calories}</td>
