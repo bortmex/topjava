@@ -27,11 +27,9 @@
 
     <input type="hidden" readonly="readonly" name="mealId"
                      value="<c:out value="${meal.id}" />" /> <br />
-
     DATE : <input
         type="datetime-local" name="dob"
         value="${meal.dateTime}" /> <br />
-
     Description : <input type="text" name="mealdescription"
                          value="<c:out value="${meal.description}" />" /> <br />
     Calories : <input

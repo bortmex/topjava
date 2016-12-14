@@ -53,7 +53,7 @@ public class MealsUtil {
         meals.forEach(meal -> {
             if (TimeUtil.isBetween(meal.getTime(), startTime, endTime)) {
                 MealWithExceed mwe = createWithExceed(meal, caloriesSumByDate.get(meal.getDate()) > caloriesPerDay);
-                mwe.setId(meal.getId());
+                mwe.setId(Integer.parseInt(meal.getId().toString()));
                 mealsWithExceeded.add(mwe);
             }
         });
