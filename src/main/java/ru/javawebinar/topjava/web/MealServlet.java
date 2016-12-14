@@ -87,7 +87,7 @@ public class MealServlet  extends HttpServlet {
         String mealId = req.getParameter("mealId");
         if(mealId == null || mealId.isEmpty())
         {
-            meal.setId(mealDao.getArrayId());
+            meal.setId(MealDaoMemory.index.get());
             mealDao.add(meal);
         }
         else

@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.dao;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -19,9 +20,7 @@ public interface MealDao {
 
     public Meal getById(Integer id);
 
-    public Integer getArrayId();
-
-    public  List<Meal> list();
+    public Collection<Meal> list();
 
     public List<Meal> queryFindByName(String name);
 }

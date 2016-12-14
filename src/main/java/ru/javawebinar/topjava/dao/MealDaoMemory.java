@@ -17,7 +17,7 @@ public class MealDaoMemory implements MealDao{
 
     private ConcurrentHashMap<Integer, Meal> listMeals =  new ConcurrentHashMap<>();
 
-    public AtomicInteger index = new AtomicInteger(0);
+    public static AtomicInteger index = new AtomicInteger(0);
 
     public MealDaoMemory() {
         add(new Meal(LocalDateTime.of(2015, Month.MAY, 30, 10, 0), "Завтрак", 500));
@@ -30,22 +30,15 @@ public class MealDaoMemory implements MealDao{
     }
 
     @Override
-    public Integer getArrayId(){
-        return index.get();
-    }
-
-    @Override
     public void add(Meal users) {
         index.getAndIncrement();
         users.setId(index.get());
-        listMeals.put(Integer.parseInt(getArrayId().toString()), users);
+        listMeals.put(index.get(), users);
     }
 
     @Override
     public void update(Meal meal) {
-        int id= meal.getId();
-        remove(meal.getId());
-        listMeals.put(id, meal);
+        listMeals.put(meal.getId(), meal);
     }
 
     @Override
@@ -59,13 +52,8 @@ public class MealDaoMemory implements MealDao{
     }
 
     @Override
-    public List<Meal> list() {
-
-        List<Meal> list = new ArrayList<>();
-        for (Map.Entry<Integer,Meal> meal:listMeals.entrySet()) {
-            list.add(meal.getValue());
-        }
-        return list;
+    public Collection<Meal> list() {
+        return listMeals.values();
     }
 
     @Override
