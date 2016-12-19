@@ -27,8 +27,8 @@
         <h3>FilterDate:</h3>
         <table border="1" cellpadding="10" cellspacing="0" bordercolor="white">
             <tr>
-                От даты:
-                <input type="date" name=${date.startdate}>
+                <td>От даты: </td>
+                <td><input type="date" name=${date.startdate}> </td>
                 <td>До даты: </td>
                 <td><input type="date" name=${date.enddate}> </td>
             </tr>
