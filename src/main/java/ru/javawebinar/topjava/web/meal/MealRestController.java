@@ -18,8 +18,12 @@ import java.util.List;
 public class MealRestController {
     protected final Logger LOG = LoggerFactory.getLogger(getClass());
 
+    private final MealService service;
+
     @Autowired
-    private MealService service;
+    public MealRestController(MealService service) {
+        this.service = service;
+    }
 
     public List<Meal> getAll() {
         LOG.info("getAll");
@@ -28,24 +32,23 @@ public class MealRestController {
 
     public Meal get(int id) {
         LOG.info("get " + id);
-        return service.get(id);
+        return service.get(id,AuthorizedUser.id());
     }
 
     public Meal create(Meal meal) {
         meal.setId(null);
         LOG.info("create " + meal);
-        return service.save(meal);
+        return service.save(meal,AuthorizedUser.id());
     }
 
     public void delete(int id) {
         LOG.info("delete " + id);
-        service.delete(id);
+        service.delete(id,AuthorizedUser.id());
     }
 
     public void update(Meal meal, int id) {
         meal.setId(id);
         LOG.info("update " + meal);
-        service.update(meal);
+        service.update(meal,AuthorizedUser.id());
     }
-
 }

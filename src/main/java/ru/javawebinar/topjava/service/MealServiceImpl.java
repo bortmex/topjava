@@ -1,42 +1,65 @@
 package ru.javawebinar.topjava.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Collection;
 import java.util.List;
 /**
  * GKislin
  * 06.03.2015.
  */
+@Service
 public class MealServiceImpl implements MealService {
 
+    private final MealRepository repository;
+
     @Autowired
-    private MealRepository repository;
-
-    @Override
-    public Meal save(Meal meal) {
-        return repository.save(meal);
+    public MealServiceImpl(MealRepository repository) {
+        this.repository = repository;
     }
 
     @Override
-    public void delete(int id) throws NotFoundException {
-        repository.delete(id);
+    public Meal save(Meal meal, int userId) {
+        return repository.save(meal, userId);
     }
 
     @Override
-    public Meal get(int id) throws NotFoundException {
-        return repository.get(id);
+    public void delete(int id, int userId) throws NotFoundException {
+        repository.delete(id,userId);
     }
 
     @Override
-    public List<Meal> getAll(int id) {
-        return repository.getAll();
+    public Meal get(int id, int userId) throws NotFoundException {
+        return repository.get(id, userId);
     }
 
     @Override
-    public void update(Meal meal) {
-        repository.save(meal);
+    public List<Meal> getAll(int userId) {
+        return (List<Meal>)repository.getAll(userId);
+    }
+
+    @Override
+    public Collection<Meal> getFilterAll(LocalDate startDate, LocalDate endDate, int userId) {
+        return repository.getBetween(startDate,endDate,userId);
+    }
+
+    @Override
+    public Collection<Meal> getFilterAll(LocalTime startTime, LocalTime endTime, int userId) {
+        return repository.getBetween(startTime,endTime,userId);
+    }
+
+
+    @Override
+    public void update(Meal meal, int userId) {
+        repository.save(meal,userId);
     }
 }
