@@ -30,8 +30,7 @@ public class FilterConnect  implements Filter {
     {
         if (active)
         {
-            String id = request.getParameter("date");
-            System.out.println("234");
+            String date = request.getParameter("date");
 
         }
         chain.doFilter(request, response);
