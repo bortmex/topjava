@@ -4,8 +4,10 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.to.MealWithExceed;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -45,32 +47,30 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         if (repository.containsKey(id) && repository.get(id).getUserId() == userId) {
             repository.remove(id);
             return true;
-        } else return false;
+        } else throw new NotFoundException("Не найдено");
     }
 
     @Override
     public Meal get(int id, int userId) {
         if (repository.containsKey(id) && repository.get(id).getUserId() == userId) {
             return repository.get(id);
-        } else return null;
+        } else throw new NotFoundException("Не найдено");
     }
 
     @Override
-    public Collection<Meal> getAll(int userId) {
-
+    public Collection<MealWithExceed> getAll(int userId) {
         List<Meal> listMeal = repository.entrySet().stream().filter(meal -> meal.getValue().getUserId() == userId).map(Map.Entry::getValue).sorted((a, b) -> (-1) * a.getDateTime().compareTo(b.getDateTime())).collect(Collectors.toList());
-
         if (listMeal.size() == 0) return null;
-        else return listMeal;
+        else return MealsUtil.getWithExceeded(listMeal , MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
     @Override
-    public Collection<Meal> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int userId) {
-        List<Meal> listmeal = getAll(userId).stream()
-                .filter(meal -> DateTimeUtil.isBetweenDate(meal.getDate(), startDate, endDate))
+    public Collection<MealWithExceed> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int userId) {
+        List<MealWithExceed> listmeal = getAll(userId).stream()
+                .filter(meal -> DateTimeUtil.isBetweenDate(meal.getDateTime().toLocalDate(), startDate, endDate))
                 .collect(Collectors.toList());
         return listmeal.stream()
-                .filter(meal -> DateTimeUtil.isBetween(meal.getTime(), startTime, endTime))
+                .filter(meal -> DateTimeUtil.isBetween(meal.getDateTime().toLocalTime(), startTime, endTime))
                 .collect(Collectors.toList());
     }
 }

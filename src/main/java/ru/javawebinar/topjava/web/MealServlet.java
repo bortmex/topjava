@@ -74,7 +74,7 @@ public class MealServlet extends HttpServlet {
 
             request.setAttribute("userId",AuthorizedUser.id());
             request.setAttribute("userName", repositoryuser.get(AuthorizedUser.id()).getName());
-            request.setAttribute("meals",  MealsUtil.getWithExceeded(profileRestController.getBetween(startDate, endDate, startTime, endTime, AuthorizedUser.id()), MealsUtil.DEFAULT_CALORIES_PER_DAY));
+            request.setAttribute("meals",  profileRestController.getBetween(startDate, endDate, startTime, endTime, AuthorizedUser.id()));
             request.getRequestDispatcher("/meals.jsp").forward(request, response);
         }
 
@@ -95,7 +95,7 @@ public class MealServlet extends HttpServlet {
             request.setAttribute("userId",AuthorizedUser.id());
             request.setAttribute("userName", repositoryuser.get(AuthorizedUser.id()).getName());
             request.setAttribute("meals",
-                    MealsUtil.getWithExceeded(repository.getAll(AuthorizedUser.id()), MealsUtil.DEFAULT_CALORIES_PER_DAY));
+                    repository.getAll(AuthorizedUser.id()));
             request.getRequestDispatcher("/meals.jsp").forward(request, response);
 
         } else if ("delete".equals(action)) {

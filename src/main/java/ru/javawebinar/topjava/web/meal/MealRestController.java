@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
+import ru.javawebinar.topjava.to.MealWithExceed;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -28,7 +29,7 @@ public class MealRestController {
         this.service = service;
     }
 
-    public List<Meal> getAll() {
+    public List<MealWithExceed> getAll() {
         LOG.info("getAll");
         return service.getAll(AuthorizedUser.id());
     }
@@ -55,7 +56,7 @@ public class MealRestController {
         service.update(meal,AuthorizedUser.id());
     }
 
-    public Collection<Meal> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int id){
+    public Collection<MealWithExceed> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int id){
         return service.getFilterAll(startDate,endDate,startTime,endTime,id);
     }
 }
