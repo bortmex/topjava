@@ -55,7 +55,7 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
 
     @Override
     public Collection<MealWithExceed> getAll(int userId) {
-        List<Meal> listMeal = repository.entrySet().stream().filter(meal -> meal.getValue().getUserId() == userId).map(Map.Entry::getValue).sorted((a, b) -> (-1) * a.getDateTime().compareTo(b.getDateTime())).collect(Collectors.toList());
+        List<Meal> listMeal = repository.values().stream().filter(meal -> meal.getUserId() == userId).sorted((a, b) -> (-1) * a.getDateTime().compareTo(b.getDateTime())).collect(Collectors.toList());
         if (listMeal.size() == 0) return null;
         else return MealsUtil.getWithExceeded(listMeal , MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }

@@ -29,10 +29,10 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public boolean delete(int id) {
         LOG.info("delete " + id);
-        if(repository.containsKey(id)){
+        if (repository.containsKey(id)) {
             repository.remove(id);
-        return true;}
-        else return false;
+            return true;
+        } else return false;
     }
 
     @Override
@@ -47,20 +47,17 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
 
     @Override
     public User get(int id) {
-        LOG.info("get " + id);if(repository.containsKey(id)){
-            return repository.get(id);}
-        else return null;
+        LOG.info("get " + id);
+        if (repository.containsKey(id)) {
+            return repository.get(id);
+        } else return null;
     }
 
     @Override
     public List<User> getAll() {
         LOG.info("getAll");
 
-        List<User> listUser = new ArrayList<>();
-        for (Map.Entry<Integer,User> user:repository.entrySet()) {
-            listUser.add(user.getValue());
-        }
-
+        List<User> listUser = new ArrayList<>(repository.values());
         Collections.sort(listUser, (a, b) -> a.getName().compareTo(b.getName()));
         return listUser;
     }
@@ -68,9 +65,13 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public User getByEmail(String email) {
         LOG.info("getByEmail " + email);
-        for (Map.Entry<Integer,User> user:repository.entrySet()) {
-            if(user.getValue().getEmail().equals(email)) return user.getValue();
-        }
-        return null;
+
+        return repository.entrySet().stream().filter(user -> user.getValue().getEmail().equals(email)).findFirst().get().getValue();
+    }
+
+    public static void main(String[] args) {
+        InMemoryUserRepositoryImpl im = new InMemoryUserRepositoryImpl();
+        System.out.println(im.getAll());
+        System.out.println("Здорова + " + im.getByEmail("email1"));
     }
 }
