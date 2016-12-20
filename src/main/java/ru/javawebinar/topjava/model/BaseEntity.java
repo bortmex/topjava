@@ -1,7 +1,5 @@
 package ru.javawebinar.topjava.model;
 
-import ru.javawebinar.topjava.AuthorizedUser;
-
 /**
  * User: gkislin
  * Date: 22.08.2014

@@ -41,24 +41,25 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     }
 
     @Override
-    public void delete(int id, int userId) {
-        Meal meal = repository.get(id);
-        if(meal.getUserId()==userId) repository.remove(id);
+    public boolean delete(int id, int userId) {
+        if(repository.containsKey(id)){
+            repository.remove(id);
+            return true;}
+        else return false;
     }
 
     @Override
     public Meal get(int id, int userId) {
-        Meal meal = repository.get(id);
-        if(meal.getUserId()==userId) return meal;
+        if(repository.containsKey(id)){
+            return repository.get(id);}
         else return null;
     }
 
     @Override
     public Collection<Meal> getAll(int userId) {
 
-        List<Meal> listMeal = repository.entrySet().stream().filter(meal -> meal.getValue().getUserId() == userId).map(Map.Entry::getValue).collect(Collectors.toList());
+        List<Meal> listMeal = repository.entrySet().stream().filter(meal -> meal.getValue().getUserId() == userId).map(Map.Entry::getValue).sorted((a, b) -> (-1) * a.getDateTime().compareTo(b.getDateTime())).collect(Collectors.toList());
 
-        Collections.sort(listMeal, (a, b) -> (-1) * a.getDateTime().compareTo(b.getDateTime()));
         if (listMeal.size() == 0) return null;
         else return listMeal;
     }
@@ -71,12 +72,5 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         return listmeal.stream()
                 .filter(meal -> DateTimeUtil.isBetween(meal.getTime(), startTime, endTime))
                 .collect(Collectors.toList());
-    }
-
-    public static void main(String[] args) {
-        LocalDateTime ps = LocalDateTime.of(2015, Month.MAY, 30, 20, 0);
-
-        System.out.println(ps.toLocalDate());
-        System.out.println(ps.toLocalTime());
     }
 }

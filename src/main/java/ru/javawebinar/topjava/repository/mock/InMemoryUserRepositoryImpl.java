@@ -62,12 +62,7 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
             listUser.add(user.getValue());
         }
 
-        Collections.sort(listUser, new Comparator<User>() {
-            @Override
-            public int compare(User a,User b) {
-                return a.getName().compareTo(b.getName());
-            }
-        });
+        Collections.sort(listUser, (a, b) -> a.getName().compareTo(b.getName()));
         return listUser;
     }
 
