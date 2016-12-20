@@ -19,24 +19,23 @@
 <section>
     <h2><a href="index.html">Home</a></h2>
 
-    <h3>userId: <jsp:useBean id="userId" type="java.lang.Integer" scope="request"/>
-        <input type="text" name="id" value="${userId}" disabled="true"></h3>
-
-   <%-- <jsp:useBean id="date" type="ru.javawebinar.topjava.to.localDate"/>--%>
+    <h3>userId: ${userId}</h3>
+    <h3>userName: ${userName}</h3>
 
         <h3>FilterDate:</h3>
+            <form method="post" action="meals?action=filter">
         <table border="1" cellpadding="10" cellspacing="0" bordercolor="white">
             <tr>
                 <td>От даты: </td>
-                <td><input type="date" name=${date.startdate}> </td>
+                <td><input type="date" name="fromDate" value="${startDate}"> </td>
                 <td>До даты: </td>
-                <td><input type="date" name=${date.enddate}> </td>
+                <td><input type="date" name="toDate" value="${endDate}"> </td>
             </tr>
             <tr>
                 <td>От времени: </td>
-                <td><input type="time" name=${date.starttime}></td>
+                <td><input type="time" name="fromTime" value="${startTime}"></td>
                 <td>До времени: </td>
-                <td><input type="time" name=${date.endtime}> </td>
+                <td><input type="time" name="toTime" value="${endTime}"> </td>
             </tr>
             <tr>
                 <td></td>
@@ -44,9 +43,10 @@
                 <td></td>
                 <td></td>
                 <td><input type="submit"
-                           value="Отфильтровать"/></td>
+                           value="Отфильтровать"></td>
             </tr>
         </table>
+    </form>
 
     <h2>Meal list</h2>
     <a href="meals?action=create">Add Meal</a>
@@ -66,8 +66,6 @@
             <jsp:useBean id="meal" scope="page" type="ru.javawebinar.topjava.to.MealWithExceed"/>
             <tr class="${meal.exceed ? 'exceeded' : 'normal'}">
                 <td>
-                        <%--${meal.dateTime.toLocalDate()} ${meal.dateTime.toLocalTime()}--%>
-                        <%--<%=TimeUtil.toString(meal.getDateTime())%>--%>
                         ${fn:formatDateTime(meal.dateTime)}
                 </td>
                 <td>${meal.description}</td>

@@ -25,6 +25,7 @@
         <url-pattern>/meals</url-pattern>
     </servlet-mapping>
 
+<!--
     <filter>
         <filter-name>FilterName</filter-name>
         <filter-class>ru.javawebinar.topjava.web.FilterConnect</filter-class>
@@ -38,5 +39,6 @@
         <filter-name>FilterName</filter-name>
         <servlet-name>mealServlet</servlet-name>
 </filter-mapping>
+-->
 
 </web-app>

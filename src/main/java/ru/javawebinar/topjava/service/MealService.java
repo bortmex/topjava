@@ -25,9 +25,7 @@ public interface MealService {
 
     List<Meal> getAll(int userId);
 
-    Collection<Meal> getFilterAll(LocalDate startDate, LocalDate endDate, int userId );
-
-    Collection<Meal> getFilterAll(LocalTime startTime, LocalTime endTime, int userId );
+    Collection<Meal> getFilterAll(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int userId );
 
     void update(Meal meal, int userId);
 }

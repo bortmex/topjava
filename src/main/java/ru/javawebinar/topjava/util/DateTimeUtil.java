@@ -20,6 +20,10 @@ public class DateTimeUtil {
         return lt.compareTo(startTime) >= 0 && lt.compareTo(endTime) <= 0;
     }
 
+    public static LocalDate parseLocalDate(String text) {return text.equals("") ? null : LocalDate.parse(text, DateTimeFormatter.ofPattern("yyyy-MM-dd"));}
+
+    public static LocalTime parseLocalTime(String text) {return text.equals("") ? null : LocalTime.parse(text, DateTimeFormatter.ofPattern("HH:mm"));}
+
     public static String toString(LocalDateTime ldt) {
         return ldt == null ? "" : ldt.format(DATE_TIME_FORMATTER);
     }
