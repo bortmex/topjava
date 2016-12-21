@@ -18,6 +18,13 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        String userid = request.getParameter("id");
+        if(userid.equals("1")){
+            AuthorizedUser.setId(1);
+        } else if(userid.equals("2"))
+            AuthorizedUser.setId(2);
+        response.sendRedirect("meals");
     }
 
     @Override

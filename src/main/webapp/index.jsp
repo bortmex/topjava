@@ -7,19 +7,18 @@
 <body>
 <h3>Проект <a href="https://github.com/JavaWebinar/topjava09" target="_blank">Java Enterprise (Topjava)</a></h3>
 
-<form >
-    <p><label>
-        <select name="id" size="2" multiple>
-            <option selected value="1">1</option>
-            <option value="2">2</option>
-        </select>
-    </label>
-        <input type="submit" value="Отправить"></p>
-</form>
-
 <hr>
 <ul>
     <li><a href="users">User List</a></li>
-    <li><a href="meals">Meal List</a></li>
+    <%--<li><a href="meals">Meal List</a></li>--%>
+    <form method="post" action="users">
+        <p><label>
+            <select name="id" size="2" multiple>
+                <option selected value="1">1</option>
+                <option value="2">2</option>
+            </select>
+        </label>
+            <input type="submit" value="Отправить"></p>
+    </form>
 </ul>
 </body>
