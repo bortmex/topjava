@@ -6,10 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.repository.mock.InMemoryMealRepositoryImpl;
-import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.mock.InMemoryUserRepositoryImpl;
+import ru.javawebinar.topjava.service.MealServiceImpl;
 import ru.javawebinar.topjava.util.DateTimeUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
@@ -28,18 +27,16 @@ import java.util.Objects;
 public class MealServlet extends HttpServlet {
     private static final Logger LOG = LoggerFactory.getLogger(MealServlet.class);
 
-    private MealRepository repository;
-    private UserRepository repositoryuser;
+    private MealRestController repository;
     private ClassPathXmlApplicationContext springContext;
-    private MealRestController profileRestController;
+    private InMemoryUserRepositoryImpl inMemoryUserRepository;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        repository = new InMemoryMealRepositoryImpl();
-        repositoryuser = new InMemoryUserRepositoryImpl();
+        repository = new MealRestController(new MealServiceImpl(new InMemoryMealRepositoryImpl()));
         springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml");
-        profileRestController = springContext.getBean(MealRestController.class);
+        inMemoryUserRepository = springContext.getBean(InMemoryUserRepositoryImpl.class);
     }
 
     @Override
@@ -55,7 +52,10 @@ public class MealServlet extends HttpServlet {
                 Integer.valueOf(request.getParameter("calories")));
 
         LOG.info(meal.isNew() ? "Create {}" : "Update {}", meal);
-        repository.save(meal, AuthorizedUser.id());
+            if(meal.getId()==null)
+        repository.create(meal); else {
+            repository.update(meal);
+            }
         response.sendRedirect("meals");} else if(action.equals("filter")){
             LocalDate startDate = DateTimeUtil.parseLocalDate(resetParam("fromDate",request));
             LocalDate endDate = DateTimeUtil.parseLocalDate(resetParam("toDate",request));
@@ -69,8 +69,8 @@ public class MealServlet extends HttpServlet {
             LOG.info("startDate == " + startDate + "\tendDate == " + endDate + "\t startTime == " + startTime + "\t endTime == " + endTime);
 
             request.setAttribute("userId",AuthorizedUser.id());
-            request.setAttribute("userName", repositoryuser.get(AuthorizedUser.id()).getName());
-            request.setAttribute("meals",  profileRestController.getBetween(startDate, endDate, startTime, endTime, AuthorizedUser.id()));
+            request.setAttribute("userName",inMemoryUserRepository.get(AuthorizedUser.id()).getName() );
+            request.setAttribute("meals",  repository.getBetween(startDate, endDate, startTime, endTime, AuthorizedUser.id()));
             request.getRequestDispatcher("/meals.jsp").forward(request, response);
         }
 
@@ -89,21 +89,21 @@ public class MealServlet extends HttpServlet {
         if (action == null) {
             LOG.info("getAll");
             request.setAttribute("userId",AuthorizedUser.id());
-            request.setAttribute("userName", repositoryuser.get(AuthorizedUser.id()).getName());
+            request.setAttribute("userName", springContext.getBean(InMemoryUserRepositoryImpl.class).get(AuthorizedUser.id()).getName());
             request.setAttribute("meals",
-                    repository.getAll(AuthorizedUser.id()));
+                    repository.getAll());
             request.getRequestDispatcher("/meals.jsp").forward(request, response);
 
         } else if ("delete".equals(action)) {
             int id = getId(request);
             LOG.info("Delete {}", id);
-            repository.delete(id, AuthorizedUser.id());
+            repository.delete(id);
             response.sendRedirect("meals");
 
         } else if ("create".equals(action) || "update".equals(action)) {
             final Meal meal = action.equals("create") ?
                     new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
-                    repository.get(getId(request),AuthorizedUser.id());
+                    repository.get(getId(request));
             request.setAttribute("meal", meal);
             request.getRequestDispatcher("meal.jsp").forward(request, response);
         }

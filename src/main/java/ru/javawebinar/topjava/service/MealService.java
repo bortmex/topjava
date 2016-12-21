@@ -21,9 +21,9 @@ public interface MealService {
 
     Meal get(int id, int userId) throws NotFoundException;
 
-    List<MealWithExceed> getAll(int userId);
+    List<Meal> getAll(int userId);
 
-    Collection<MealWithExceed> getFilterAll(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int userId );
+    Collection<Meal> getFilterAll(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int userId );
 
     void update(Meal meal, int userId);
 }

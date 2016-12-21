@@ -22,7 +22,7 @@ public interface MealRepository {
     Meal get(int id, int userId);
 
 
-    Collection<MealWithExceed> getAll(int userId);
+    Collection<Meal> getAll(int userId);
 
-    Collection<MealWithExceed> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int userId);
+    Collection<Meal> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int userId);
 }

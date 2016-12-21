@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.util.UsersUtil;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,16 +29,11 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean delete(int id) {
-        LOG.info("delete " + id);
-        if (repository.containsKey(id)) {
-            repository.remove(id);
-            return true;
-        } else return false;
+        return repository.remove(id) != null;
     }
 
     @Override
     public User save(User user) {
-        LOG.info("save " + user);
         if (user.isNew()) {
             user.setId(counter.incrementAndGet());
         }
@@ -47,16 +43,11 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
 
     @Override
     public User get(int id) {
-        LOG.info("get " + id);
-        if (repository.containsKey(id)) {
             return repository.get(id);
-        } else return null;
     }
 
     @Override
     public List<User> getAll() {
-        LOG.info("getAll");
-
         List<User> listUser = new ArrayList<>(repository.values());
         Collections.sort(listUser, (a, b) -> a.getName().compareTo(b.getName()));
         return listUser;
@@ -64,14 +55,12 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
 
     @Override
     public User getByEmail(String email) {
-        LOG.info("getByEmail " + email);
-
-        return repository.entrySet().stream().filter(user -> user.getValue().getEmail().equals(email)).findFirst().get().getValue();
-    }
-
-    public static void main(String[] args) {
-        InMemoryUserRepositoryImpl im = new InMemoryUserRepositoryImpl();
-        System.out.println(im.getAll());
-        System.out.println("Здорова + " + im.getByEmail("email1"));
+        User user;
+        try {
+            user =  repository.entrySet().stream().filter(s -> s.getValue().getEmail().equals(email)).findFirst().get().getValue();
+        }catch (NoSuchElementException e){
+            throw new NotFoundException("Не найдено");
+        }
+        return user;
     }
 }

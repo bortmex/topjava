@@ -17,7 +17,7 @@
 </head>
 <body>
 <section>
-    <h2><a href="index.html">Home</a></h2>
+    <h2><a href="index.jsp">Home</a></h2>
 
     <h3>userId: ${userId}</h3>
     <h3>userName: ${userName}</h3>

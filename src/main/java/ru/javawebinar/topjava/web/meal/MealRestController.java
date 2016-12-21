@@ -8,6 +8,7 @@ import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -31,32 +32,31 @@ public class MealRestController {
 
     public List<MealWithExceed> getAll() {
         LOG.info("getAll");
-        return service.getAll(AuthorizedUser.id());
+        return MealsUtil.getWithExceeded(service.getAll(AuthorizedUser.id()), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
     public Meal get(int id) {
         LOG.info("get " + id);
-        return service.get(id,AuthorizedUser.id());
+        return service.get(id, AuthorizedUser.id());
     }
 
     public Meal create(Meal meal) {
         meal.setId(null);
         LOG.info("create " + meal);
-        return service.save(meal,AuthorizedUser.id());
+        return service.save(meal, AuthorizedUser.id());
     }
 
     public void delete(int id) {
         LOG.info("delete " + id);
-        service.delete(id,AuthorizedUser.id());
+        service.delete(id, AuthorizedUser.id());
     }
 
-    public void update(Meal meal, int id) {
-        meal.setId(id);
+    public void update(Meal meal) {
         LOG.info("update " + meal);
-        service.update(meal,AuthorizedUser.id());
+        service.update(meal, AuthorizedUser.id());
     }
 
-    public Collection<MealWithExceed> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int id){
-        return service.getFilterAll(startDate,endDate,startTime,endTime,id);
+    public Collection<MealWithExceed> getBetween(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int id) {
+        return MealsUtil.getWithExceeded(service.getFilterAll(startDate, endDate, startTime, endTime, id), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 }

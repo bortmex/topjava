@@ -44,17 +44,17 @@ public class MealServiceImpl implements MealService {
     }
 
     @Override
-    public List<MealWithExceed> getAll(int userId) {
-        return (List<MealWithExceed>)repository.getAll(userId);
+    public List<Meal> getAll(int userId) {
+        return (List<Meal>)repository.getAll(userId);
     }
 
     @Override
-    public Collection<MealWithExceed> getFilterAll(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int userId) {
+    public Collection<Meal> getFilterAll(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime, int userId) {
         return repository.getBetween(startDate,endDate,startTime,endTime,userId);
     }
 
     @Override
     public void update(Meal meal, int userId) {
-        repository.save(meal,userId);
+        checkNotFoundWithId(repository.save(meal,userId),userId);
     }
 }
