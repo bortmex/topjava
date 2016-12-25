@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 
 import javax.sql.DataSource;
@@ -32,11 +31,11 @@ public class JdbcMealRepositoryImpl implements MealRepository {
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    private SimpleJdbcInsert insertUser;
+    private SimpleJdbcInsert insertMeal;
 
     @Autowired
     public JdbcMealRepositoryImpl(DataSource dataSource) {
-        this.insertUser = new SimpleJdbcInsert(dataSource)
+        this.insertMeal = new SimpleJdbcInsert(dataSource)
                 .withTableName("MEALS")
                 .usingGeneratedKeyColumns("id");
     }
@@ -45,12 +44,12 @@ public class JdbcMealRepositoryImpl implements MealRepository {
     public Meal save(Meal meal, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", meal.getId())
-                .addValue("registered", meal.getRegistered())
+                .addValue("datetime", meal.getDateTime())
                 .addValue("description", meal.getDescription())
                 .addValue("calories", meal.getCalories());
 
         if (meal.isNew()) {
-            Number newKey = insertUser.executeAndReturnKey(map);
+            Number newKey = insertMeal.executeAndReturnKey(map);
             meal.setId(newKey.intValue());
         } else {
             namedParameterJdbcTemplate.update(
