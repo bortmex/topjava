@@ -45,7 +45,7 @@ public class JdbcMealRepositoryImpl implements MealRepository {
     public Meal save(Meal meal, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", meal.getId())
-                .addValue("datetime", meal.getDateTime())
+                .addValue("registered", meal.getRegistered())
                 .addValue("description", meal.getDescription())
                 .addValue("calories", meal.getCalories());
 
@@ -78,6 +78,6 @@ public class JdbcMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return jdbcTemplate.query("SELECT * FROM meals WHERE datetime > startDate AND datetime < endDate ORDER BY datetime DESC", ROW_MAPPER, startDate, endDate);
+        return null/*jdbcTemplate.query("SELECT * FROM meals WHERE datetime > startDate AND datetime < endDate ORDER BY datetime DESC", ROW_MAPPER, startDate, endDate)*/;
     }
 }

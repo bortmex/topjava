@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 
 /**
  * GKislin
@@ -14,6 +15,12 @@ public class Meal extends BaseEntity {
     private final String description;
 
     private final int calories;
+
+    private Date registered = new Date();
+
+    public Date getRegistered() {
+        return registered;
+    }
 
     public Meal(LocalDateTime dateTime, String description, int calories) {
         this(null, dateTime, description, calories);

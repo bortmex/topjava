@@ -17,7 +17,7 @@ CREATE TABLE users
   enabled    BOOL DEFAULT TRUE,
   calories_per_day INTEGER DEFAULT 2000 NOT NULL
 );
-CREATE UNIQUE INDEX users_unique_email_idx ON users (id);
+CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
 CREATE TABLE user_roles
 (
