@@ -30,8 +30,10 @@ CREATE TABLE user_roles
 CREATE TABLE meals
 (
   id         INTEGER PRIMARY KEY DEFAULT nextval('global_seqm'),
-  dateTime   VARCHAR NOT NULL,
+  user_id      INTEGER NOT NULL,
   description VARCHAR NOT NULL,
-  calories   VARCHAR NOT NULL
+  dateTime   TIMESTAMP NOT NULL,
+  calories   VARCHAR NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX meals_unique_email_idx ON meals (id);

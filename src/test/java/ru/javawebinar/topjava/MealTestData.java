@@ -15,8 +15,10 @@ import java.util.Objects;
  */
 public class MealTestData {
 
-    public static final Meal MEAL1 = new Meal(100000, LocalDateTime.of(2015, Month.MAY, 30,12,34, 43), "Ужин", 1555);
-    public static final Meal MEAL2 = new Meal(100001, LocalDateTime.of(2015, Month.MAY, 30,12,34, 43), "Завтрак", 1555);
+    public static final LocalDateTime ldt = LocalDateTime.now();
+
+    public static final Meal MEAL1 = new Meal(100000, LocalDateTime.of(2016,Month.APRIL,12,34,34,34, 34542), "ужин", 100);
+    public static final Meal MEAL2 = new Meal(100001, LocalDateTime.of(2016,Month.APRIL,12,34,34,34, 34542), "завтрак", 100);
 
     public static final ModelMatcher<Meal> MATCHER = new ModelMatcher<>((
             (expected, actual) -> expected == actual ||

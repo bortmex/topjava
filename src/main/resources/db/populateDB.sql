@@ -13,5 +13,5 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
   ('ROLE_ADMIN', 100001);
 
-INSERT INTO meals (dateTime, description, calories)
-VALUES (localtimestamp, 'ужин', 100), (localtimestamp, 'завтрак', 100);
+INSERT INTO meals (dateTime, user_id, description, calories)
+VALUES (localtimestamp,100000, 'ужин', 100), (localtimestamp,100000, 'завтрак', 100);
