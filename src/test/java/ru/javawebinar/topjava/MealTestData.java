@@ -4,7 +4,7 @@ import ru.javawebinar.topjava.matcher.ModelMatcher;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.*;
 
 import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
 
@@ -13,6 +13,11 @@ import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
  * 13.03.2015.
  */
 public class MealTestData {
+
+    public static List<Meal> sortMeals(List<Meal> list){
+        Collections.sort(list,(o1, o2) -> o1.getId().compareTo(o2.getId()));
+        return list;
+    }
 
     public static final int MEAL1_ID = START_SEQ;
     public static final int MEAL2_ID = START_SEQ + 1;

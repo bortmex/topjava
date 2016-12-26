@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.util.DbPopulator;
+import ru.javawebinar.topjava.util.DbPopulatorMeal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -33,7 +33,7 @@ public class MealServiceTest {
     private MealService service;
 
     @Autowired
-    private DbPopulator dbPopulator;
+    private DbPopulatorMeal dbPopulator;
 
     @Before
     public void setUp() throws Exception {
@@ -107,8 +107,7 @@ public class MealServiceTest {
 
     @Test
     public void testGetAll() throws Exception {
-        Collection<Meal> all = service.getAll(AuthorizedUser.id());
-        MATCHER.assertCollectionEquals(Arrays.asList(MEAL1, MEAL2), all);
+        MATCHER.assertCollectionEquals(sortMeals(Arrays.asList(MEAL1, MEAL2)), sortMeals((List<Meal>) service.getAll(AuthorizedUser.id())));
 
     }
 
@@ -124,16 +123,10 @@ public class MealServiceTest {
     @Test
     public void testSave() throws Exception {
 
-        Comparator comparator = (Comparator<Meal>) (o1, o2) -> o1.getId().compareTo(o2.getId());
-
         Meal newMeal = new Meal(LocalDateTime.of(2015, Month.MAY, 30,12,34, 43), "Ужин", 1555);
         Meal created = service.save(newMeal, AuthorizedUser.id());
         newMeal.setId(created.getId());
-        List<Meal> listservise = Arrays.asList(newMeal,MEAL1,MEAL2);
-        List<Meal> listinspectors = (List<Meal>) service.getAll(AuthorizedUser.id());
-        Collections.sort(listservise,comparator);
-        Collections.sort(listinspectors,comparator);
-        MATCHER.assertCollectionEquals(listservise, listinspectors);
+        MATCHER.assertCollectionEquals(sortMeals(Arrays.asList(newMeal,MEAL1,MEAL2)), sortMeals((List<Meal>) service.getAll(AuthorizedUser.id())));
     }
 
 }
