@@ -9,12 +9,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.DbPopulator;
+import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 import static org.junit.Assert.*;
 import static ru.javawebinar.topjava.MealTestData.*;
@@ -40,14 +42,57 @@ public class MealServiceTest {
         dbPopulator.execute();
     }
 
+    @Test(expected = NotFoundException.class)
+    public void testNotFoundDelete() throws Exception {
+        service.delete(1,AuthorizedUser.id());
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testGetNotFound() throws Exception {
+        service.get(1,AuthorizedUser.id());
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testUpdateNotFound() throws Exception {
+        service.get(1,AuthorizedUser.id());
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testNotFoundDeleteForeignUsers() throws Exception {
+        service.delete(MEAL1_ID,1);
+    }
+
+
+    @Test(expected = NotFoundException.class)
+    public void testGetNotFoundForeignUsers() throws Exception {
+        service.get(MEAL1_ID,1);
+    }
+
+
+    @Test(expected = NotFoundException.class)
+    public void testUpdateNotFoundForeignUsers() throws Exception {
+        service.get(MEAL1_ID,1);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testUpdateForeignUsers() throws Exception {
+        Meal updated = new Meal(MEAL1);
+        updated.setDescription("UpdatedName");
+        updated.setCalories(330);
+        service.update(updated,1);
+        MATCHER.assertEquals(updated, service.get(MEAL1_ID,1));
+    }
+
     @Test
     public void testGet() throws Exception {
-
+        Meal meal = service.get(MEAL1_ID,AuthorizedUser.id());
+        MATCHER.assertEquals(MEAL1, meal);
     }
 
     @Test
     public void testDelete() throws Exception {
-
+        service.delete(MEAL1_ID,AuthorizedUser.id());
+        MATCHER.assertCollectionEquals(Collections.singletonList(MEAL2), service.getAll(AuthorizedUser.id()));
     }
 
     @Test
@@ -69,7 +114,11 @@ public class MealServiceTest {
 
     @Test
     public void testUpdate() throws Exception {
-
+        Meal updated = new Meal(MEAL1);
+        updated.setDescription("UpdatedName");
+        updated.setCalories(330);
+        service.update(updated,AuthorizedUser.id());
+        MATCHER.assertEquals(updated, service.get(MEAL1_ID,AuthorizedUser.id()));
     }
 
     @Test
@@ -77,7 +126,7 @@ public class MealServiceTest {
         Meal newMeal = new Meal(LocalDateTime.of(2015, Month.MAY, 30,12,34, 43), "Ужин", 1555);
         Meal created = service.save(newMeal, AuthorizedUser.id());
         newMeal.setId(created.getId());
-        MATCHER.assertCollectionEquals(Arrays.asList(MEAL1, newMeal), service.getAll(AuthorizedUser.id()));
+        MATCHER.assertCollectionEquals(Arrays.asList(newMeal,MEAL1,MEAL2), service.getAll(AuthorizedUser.id()));
     }
 
 }

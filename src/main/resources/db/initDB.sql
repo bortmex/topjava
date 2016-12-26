@@ -18,7 +18,6 @@ CREATE TABLE users
   calories_per_day INTEGER DEFAULT 2000 NOT NULL
 );
 CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
-
 CREATE TABLE user_roles
 (
   user_id INTEGER NOT NULL,
@@ -32,8 +31,9 @@ CREATE TABLE meals
   id         INTEGER PRIMARY KEY DEFAULT nextval('global_seqm'),
   user_id      INTEGER NOT NULL,
   description VARCHAR NOT NULL,
-  dateTime   TIMESTAMP NOT NULL,
+  datetime   TIMESTAMP NOT NULL,
   calories   VARCHAR NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 CREATE UNIQUE INDEX meals_unique_email_idx ON meals (id);
+
