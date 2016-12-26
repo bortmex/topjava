@@ -97,12 +97,14 @@ public class MealServiceTest {
 
     @Test
     public void testGetBetweenDates() throws Exception {
-
+        Collection<Meal> allBetween = service.getBetweenDates(LocalDate.of(2010, 6,4),LocalDate.of(2014, 6,4), AuthorizedUser.id());
+        MATCHER.assertCollectionEquals(Collections.singletonList(MEAL1), allBetween);
     }
 
     @Test
     public void testGetBetweenDateTimes() throws Exception {
-
+        Collection<Meal> allBetween = service.getBetweenDateTimes(LocalDateTime.of(2010, 6,4,7,0, 0),LocalDateTime.of(2014, 6,4,23,0, 0), AuthorizedUser.id());
+        MATCHER.assertCollectionEquals(Collections.singletonList(MEAL1), allBetween);
     }
 
     @Test
