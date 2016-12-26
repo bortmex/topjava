@@ -14,11 +14,9 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
-import static org.junit.Assert.*;
+
 import static ru.javawebinar.topjava.MealTestData.*;
 
 /**
@@ -125,10 +123,17 @@ public class MealServiceTest {
 
     @Test
     public void testSave() throws Exception {
+
+        Comparator comparator = (Comparator<Meal>) (o1, o2) -> o1.getId().compareTo(o2.getId());
+
         Meal newMeal = new Meal(LocalDateTime.of(2015, Month.MAY, 30,12,34, 43), "Ужин", 1555);
         Meal created = service.save(newMeal, AuthorizedUser.id());
         newMeal.setId(created.getId());
-        MATCHER.assertCollectionEquals(Arrays.asList(newMeal,MEAL1,MEAL2), service.getAll(AuthorizedUser.id()));
+        List<Meal> listservise = Arrays.asList(newMeal,MEAL1,MEAL2);
+        List<Meal> listinspectors = (List<Meal>) service.getAll(AuthorizedUser.id());
+        Collections.sort(listservise,comparator);
+        Collections.sort(listinspectors,comparator);
+        MATCHER.assertCollectionEquals(listservise, listinspectors);
     }
 
 }
