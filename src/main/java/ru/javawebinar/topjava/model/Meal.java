@@ -16,12 +16,6 @@ public class Meal extends BaseEntity {
 
     private int calories;
 
-    private Date registered = new Date();
-
-    public Date getRegistered() {
-        return registered;
-    }
-
     public Meal(){
 
     }
@@ -51,10 +45,6 @@ public class Meal extends BaseEntity {
 
     public void setCalories(int calories) {
         this.calories = calories;
-    }
-
-    public void setRegistered(Date registered) {
-        this.registered = registered;
     }
 
     public LocalDateTime getDateTime() {
