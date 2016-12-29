@@ -21,9 +21,11 @@ public class MealTestData {
 
     public static final int MEAL1_ID = START_SEQ;
     public static final int MEAL2_ID = START_SEQ + 1;
+    public static final int MEAL3_ID = START_SEQ + 4;
 
     public static final Meal MEAL1 = new Meal(MEAL1_ID, LocalDateTime.of(2012, 6,4,15,0, 0), "ужин", 100);
     public static final Meal MEAL2 = new Meal(MEAL2_ID, LocalDateTime.of(2015, 6,4,10,0, 0), "завтрак", 100);
+    public static final Meal MEAL3 = new Meal(MEAL3_ID, LocalDateTime.of(2013, 6,4,10,0, 0), "полдник", 500);
 
     public static final ModelMatcher<Meal> MATCHER = new ModelMatcher<>();
 

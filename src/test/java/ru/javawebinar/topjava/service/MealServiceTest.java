@@ -51,11 +51,6 @@ public class MealServiceTest {
     }
 
     @Test(expected = NotFoundException.class)
-    public void testUpdateNotFound() throws Exception {
-        service.get(1,AuthorizedUser.id());
-    }
-
-    @Test(expected = NotFoundException.class)
     public void testNotFoundDeleteForeignUsers() throws Exception {
         service.delete(MEAL1_ID,1);
     }
@@ -66,10 +61,22 @@ public class MealServiceTest {
         service.get(MEAL1_ID,1);
     }
 
+    @Test(expected = NotFoundException.class)
+    public void testUpdateNotFound() throws Exception {
+        Meal updated = new Meal(MEAL3);
+        updated.setDescription("UpdatedNameMeal");
+        updated.setCalories(330);
+        service.update(updated,AuthorizedUser.id());
+        MATCHER.assertEquals(updated, service.get(MEAL3_ID,AuthorizedUser.id()));
+    }
 
     @Test(expected = NotFoundException.class)
     public void testUpdateNotFoundForeignUsers() throws Exception {
-        service.get(MEAL1_ID,1);
+        Meal updated = new Meal(MEAL2);
+        updated.setDescription("UpdatedNameMeal");
+        updated.setCalories(330);
+        service.update(updated,1);
+        MATCHER.assertEquals(updated, service.get(MEAL2_ID,1));
     }
 
     @Test(expected = NotFoundException.class)

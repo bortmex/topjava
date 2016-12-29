@@ -25,6 +25,8 @@ CREATE TABLE user_roles
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
+
+
 CREATE TABLE meals
 (
   id         INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
@@ -34,5 +36,5 @@ CREATE TABLE meals
   calories   INTEGER NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
-CREATE UNIQUE INDEX users_unique_email_idx ON meals (id);
 
+CREATE UNIQUE INDEX meaks_unique_useridandDate_idx ON meals  (user_id, datetime);
