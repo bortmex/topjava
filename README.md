@@ -15,12 +15,18 @@ Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson)/ Bootstrap(CSS)/ jQuery +
 ### <a href="https://github.com/JavaOPs/topjava/wiki">Требования к участникам, Wiki</a>
 ### <a href="cv.md">Составление резюме, подготовка к интервью, поиск работы</a>
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/07c92a0a490345f7be06482e1f636fc8)](https://www.codacy.com/app/alexanderogov/topjava?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=bortmex/topjava&amp;utm_campaign=Badge_Grade)
+
+[![Build Status](https://travis-ci.org/JavaWebinar/topjava09.svg?branch=master)](https://travis-ci.org/JavaWebinar/topjava09)
+
+[![Dependency Status](https://dependencyci.com/github/JavaWebinar/topjava09/badge)](https://dependencyci.com/github/bortmex/topjava)
+
 Вводное занятие
 ===============
 ## ![video](https://cloud.githubusercontent.com/assets/13649199/13672715/06dbc6ce-e6e7-11e5-81a9-04fbddb9e488.png) <a href="https://drive.google.com/file/d/0B9Ye2auQ_NsFSUNrdVc0bDZuX2s">Системы управления версиями. Git.
 -  **<a href="https://github.com/JavaOPs/topjava/wiki/Git">Wiki по ведению проекта в Git</a>**
--  <a href="http://ru.wikipedia.org/wiki/Система_управления_версиями">Система управления версиями</a>. <a
-                    href="http://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0_%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F%D0%BC%D0%B8#.D0.A0.D0.B0.D1.81.D0.BF.D1.80.D0.B5.D0.B4.D0.B5.D0.BB.D1.91.D0.BD.D0.BD.D1.8B.D0.B5_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B_.D1.83.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D1.8F_.D0.B2.D0.B5.D1.80.D1.81.D0.B8.D1.8F.D0.BC.D0.B8">VCS/DVSC</a>.
+-  <a href="http://ru.wikipedia.org/wiki/Система_управления_версиями">Система управления версиями</a>. 
+<a href="http://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0_%D1%83%D0%BF%D1%80%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%B2%D0%B5%D1%80%D1%81%D0%B8%D1%8F%D0%BC%D0%B8#.D0.A0.D0.B0.D1.81.D0.BF.D1.80.D0.B5.D0.B4.D0.B5.D0.BB.D1.91.D0.BD.D0.BD.D1.8B.D0.B5_.D1.81.D0.B8.D1.81.D1.82.D0.B5.D0.BC.D1.8B_.D1.83.D0.BF.D1.80.D0.B0.D0.B2.D0.BB.D0.B5.D0.BD.D0.B8.D1.8F_.D0.B2.D0.B5.D1.80.D1.81.D0.B8.D1.8F.D0.BC.D0.B8">VCS/DVSC</a>.
 -  Ресурсы:            
     -  <a href="https://try.github.io/levels/1/challenges/1">Интерактивная Git обучалка</a>
     -  <a href="http://learngitbranching.js.org/">Еще одна интерактивная обучалка, по русски</a>    
