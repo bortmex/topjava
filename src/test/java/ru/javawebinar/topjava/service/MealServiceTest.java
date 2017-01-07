@@ -3,6 +3,7 @@ package ru.javawebinar.topjava.service;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.Stopwatch;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
@@ -43,17 +44,12 @@ public class MealServiceTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Rule
-    public TestWatcher watcher = new TestWatcher() {
-        private long startTime;
+    public Stopwatch stopwatch = new Stopwatch() {
 
         @Override
-        protected void starting(Description description) {
-            startTime = System.currentTimeMillis();
-        }
+        protected void finished(long nanos, Description description) {
+            LOG.info("Имя класса: " + description.getMethodName() + "  Время выполнения: "+String.format("%.0f", (float) nanos/1000000)+" ms");
 
-        @Override
-        protected void finished(Description description) {
-            LOG.info("Имя класса: " + description.getMethodName() + "  Время выполнения: " + Long.toString(System.currentTimeMillis()-startTime) + " ms");
         }
     };
 
