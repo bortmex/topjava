@@ -67,6 +67,11 @@ public abstract class UserSevicesTest {
     @Autowired
     private UserService service;
 
+    @Before
+    public void setUserService() throws Exception {
+        service.evictCache();
+    }
+
     @Test
     public void testSave() throws Exception {
         User newUser = new User(null, "New", "new@gmail.com", "newPass", 1555, false, Collections.singleton(Role.ROLE_USER));
