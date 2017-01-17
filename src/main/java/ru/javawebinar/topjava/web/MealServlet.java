@@ -38,7 +38,7 @@ public class MealServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         springContext = new GenericXmlApplicationContext();
-        springContext.getEnvironment().setActiveProfiles("jpa", "postgres");
+        springContext.getEnvironment().setActiveProfiles("jpa", "jdbc","jpa", "hsqldb", "postgres");
         springContext.load("spring/spring-app.xml", "spring/spring-db.xml");
         springContext.refresh();
 

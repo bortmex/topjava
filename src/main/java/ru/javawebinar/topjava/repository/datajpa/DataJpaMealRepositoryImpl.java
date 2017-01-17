@@ -15,7 +15,6 @@ import java.util.List;
  */
 @Repository
 public class DataJpaMealRepositoryImpl implements MealRepository {
-    private static final Sort SORT_NAME_DATE_TIME = new Sort("name", "date_time");
 
     @Autowired
     private CrudMealRepository crudRepository;
@@ -28,7 +27,7 @@ public class DataJpaMealRepositoryImpl implements MealRepository {
         if (!Meal.isNew() && get(Meal.getId(), userId) == null) {
             return null;
         }
-        Meal.setUser(crudUserRepository.findOne(userId));
+        Meal.setUser(crudUserRepository.getOne(userId));
         return crudRepository.save(Meal);
     }
 
