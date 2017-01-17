@@ -38,7 +38,7 @@ import static ru.javawebinar.topjava.UserTestData.*;
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public abstract class UserSevicesTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MealServiceTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MealServicesTest.class);
     private static StringBuilder results = new StringBuilder();
 
     @Rule

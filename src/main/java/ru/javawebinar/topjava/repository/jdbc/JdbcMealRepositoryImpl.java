@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 @Repository
-@Profile(Profiles.POSTGRES)
+@Profile({Profiles.POSTGRES, Profiles.JDBC, Profiles.JPA, Profiles.DATA_JPA})
 public class JdbcMealRepositoryImpl implements MealRepository {
 
     private static final RowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
