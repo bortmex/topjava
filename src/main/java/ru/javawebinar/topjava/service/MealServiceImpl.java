@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
 
 import java.time.LocalDateTime;
@@ -54,4 +55,11 @@ public class MealServiceImpl implements MealService {
         Assert.notNull(meal, "meal must not be null");
         return repository.save(meal, userId);
     }
+
+    @Override
+    public Meal getWithUser(int id, int userId) {
+
+        return checkNotFoundWithId(repository.getWithUser(id, userId), id);
+    }
+
 }

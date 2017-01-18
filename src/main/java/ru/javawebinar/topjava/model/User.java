@@ -7,9 +7,7 @@ import ru.javawebinar.topjava.util.MealsUtil;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * User: gkislin
@@ -54,9 +52,8 @@ public class User extends NamedEntity {
     @Digits(fraction = 0, integer = 4)
     private int caloriesPerDay = MealsUtil.DEFAULT_CALORIES_PER_DAY;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id", nullable = false)
-    private Meal meal;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Collection<Meal> meals;
 
     public User() {
     }
@@ -78,12 +75,12 @@ public class User extends NamedEntity {
         this.roles = roles;
     }
 
-    public Meal getMeal() {
-        return meal;
+    public Collection<Meal> getMeals() {
+        return meals;
     }
 
-    public void setMeal(Meal meal) {
-        this.meal = meal;
+    public void setMeals(Collection<Meal> meals) {
+        this.meals = meals;
     }
 
     public String getEmail() {

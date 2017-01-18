@@ -23,6 +23,8 @@ public interface UserService {
     List<User> getAll();
 
     void update(User user);
-    
+
+    User getWithMeals(int id);
+
     void evictCache();
 }

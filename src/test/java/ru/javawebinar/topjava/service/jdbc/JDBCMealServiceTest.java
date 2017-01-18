@@ -9,4 +9,5 @@ import ru.javawebinar.topjava.service.AllServicesTest;
  */
 @ActiveProfiles(Profiles.JDBC)
 public class JDBCMealServiceTest extends AllServicesTest{
+
 }

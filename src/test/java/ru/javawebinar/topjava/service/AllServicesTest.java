@@ -80,10 +80,10 @@ public abstract class AllServicesTest {
     }
 
     @Autowired
-    private MealService mealService;
+    protected MealService mealService;
 
     @Autowired
-    private UserService userService;
+    protected UserService userService;
 
     @Before
     public void setUserService() throws Exception {

@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.jdbc.JdbcMealRepositoryImpl;
 
 import javax.sql.DataSource;
@@ -54,4 +55,5 @@ public class JdbcHsqlDbMealRepositoryImpl  extends JdbcMealRepositoryImpl {
                 Date.from(startDate.atZone(ZoneId.systemDefault()).toInstant()),
                 Date.from(endDate.atZone(ZoneId.systemDefault()).toInstant()));
     }
+
 }
