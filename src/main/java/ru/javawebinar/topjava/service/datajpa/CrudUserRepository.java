@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.repository.datajpa;
+package ru.javawebinar.topjava.service.datajpa;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;

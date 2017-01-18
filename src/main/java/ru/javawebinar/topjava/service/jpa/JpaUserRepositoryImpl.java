@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.repository.jpa;
+package ru.javawebinar.topjava.service.jpa;
 
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
