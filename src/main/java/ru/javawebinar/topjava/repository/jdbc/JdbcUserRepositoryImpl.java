@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.service.jdbc;
+package ru.javawebinar.topjava.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @Repository
-@Profile({Profiles.POSTGRES, Profiles.JDBC, Profiles.JPA, Profiles.DATA_JPA})
+@Profile({Profiles.POSTGRES, Profiles.JDBC})
 public class JdbcUserRepositoryImpl implements UserRepository {
 
     private static final BeanPropertyRowMapper<User> ROW_MAPPER = BeanPropertyRowMapper.newInstance(User.class);

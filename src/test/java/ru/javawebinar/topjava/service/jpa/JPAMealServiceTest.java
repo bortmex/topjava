@@ -7,6 +7,6 @@ import ru.javawebinar.topjava.service.AllServicesTest;
 /**
  * Created by alexa on 16.01.2017.
  */
-@ActiveProfiles( Profiles.JPA)
+@ActiveProfiles(Profiles.JPA)
 public class JPAMealServiceTest extends AllServicesTest {
 }

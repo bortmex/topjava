@@ -8,5 +8,5 @@ import ru.javawebinar.topjava.service.AllServicesTest;
  * Created by alexa on 16.01.2017.
  */
 @ActiveProfiles(Profiles.DATA_JPA)
-public class DataJPAMealServiceTest extends AllServicesTest {
+public class DataJPAMealServiceTest extends AllServicesTest{
 }

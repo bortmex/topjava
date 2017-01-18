@@ -1,7 +1,9 @@
-package ru.javawebinar.topjava.service.datajpa;
+package ru.javawebinar.topjava.repository.datajpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 
@@ -15,39 +17,40 @@ import java.util.List;
 @Repository
 public class DataJpaMealRepositoryImpl implements MealRepository {
 
-    @Autowired(required = false)
-    private CrudMealRepository crudMealRepository;
+    @Autowired
+    private CrudMealRepository crudRepository;
 
-    @Autowired(required = false)
+    @Autowired
     private CrudUserRepository crudUserRepository;
 
     @Override
+    @Transactional
     public Meal save(Meal Meal, int userId) {
         if (!Meal.isNew() && get(Meal.getId(), userId) == null) {
             return null;
         }
         Meal.setUser(crudUserRepository.getOne(userId));
-        return crudMealRepository.save(Meal);
+        return crudRepository.save(Meal);
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        return crudMealRepository.delete(id, userId) != 0;
+        return crudRepository.delete(id, userId) != 0;
     }
 
     @Override
     public Meal get(int id, int userId) {
-        Meal meal = crudMealRepository.findOne(id);
+        Meal meal = crudRepository.findOne(id);
         return meal != null && meal.getUser().getId() == userId ? meal : null;
     }
 
     @Override
     public List<Meal> getAll(int userId) {
-        return crudMealRepository.findAll(userId);
+        return crudRepository.findAll(userId);
     }
 
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return crudMealRepository.findAllBetween(startDate,endDate,userId);
+        return crudRepository.findAllBetween(startDate,endDate,userId);
     }
 }

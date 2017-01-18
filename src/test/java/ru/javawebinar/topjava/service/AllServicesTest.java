@@ -37,17 +37,22 @@ import static ru.javawebinar.topjava.UserTestData.*;
 import static ru.javawebinar.topjava.UserTestData.USER_MODEL_MATCHER;
 import static ru.javawebinar.topjava.MealTestData.MEAL_MODEL_MATCHER;
 
+import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.UserTestData.*;
+
 /**
- * Created by alexa on 16.01.2017.
+ * Created by yerlan on 14/01/17.
  */
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-db.xml"
 })
-@ActiveProfiles(Profiles.ACTIVE_DB)
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
+// No ActiveProfiling here because class is abstract
+@ActiveProfiles(Profiles.ACTIVE_DB)
 public abstract class AllServicesTest {
+
     private static final Logger LOG = LoggerFactory.getLogger(AllServicesTest.class);
     private static StringBuilder results = new StringBuilder();
 
@@ -84,7 +89,6 @@ public abstract class AllServicesTest {
     public void setUserService() throws Exception {
         userService.evictCache();
     }
-
 
     @Test
     public void testUserSave() throws Exception {
@@ -142,7 +146,6 @@ public abstract class AllServicesTest {
         USER_MODEL_MATCHER.assertEquals(updated, userService.get(USER_ID));
     }
 
-
     @Test
     public void testMealDelete() throws Exception {
         mealService.delete(MEAL1_ID, USER_ID);
@@ -198,4 +201,6 @@ public abstract class AllServicesTest {
         MEAL_MODEL_MATCHER.assertCollectionEquals(Arrays.asList(MEAL3, MEAL2, MEAL1),
                 mealService.getBetweenDates(LocalDate.of(2015, Month.MAY, 30), LocalDate.of(2015, Month.MAY, 30), USER_ID));
     }
+
+
 }
