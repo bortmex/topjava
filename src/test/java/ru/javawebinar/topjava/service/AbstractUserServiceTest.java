@@ -1,9 +1,12 @@
 package ru.javawebinar.topjava.service;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.dao.DataAccessException;
+import ru.javawebinar.topjava.Profiles;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.JpaUtil;
@@ -22,12 +25,15 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
     protected UserService service;
 
     @Autowired
+    private Environment environment;
+
+    @Autowired(required = false)
     protected JpaUtil jpaUtil;
 
     @Before
     public void setUp() throws Exception {
         service.evictCache();
-        jpaUtil.clear2ndLevelHibernateCache();
+        if (!environment.acceptsProfiles(Profiles.JDBC)) jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test
@@ -56,8 +62,8 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
 
     @Test
     public void testGet() throws Exception {
-        User user = service.get(USER_ID);
-        MATCHER.assertEquals(USER, user);
+        User user = service.get(ADMIN_ID);
+        MATCHER.assertEquals(ADMIN, user);
     }
 
     @Test(expected = NotFoundException.class)
@@ -86,6 +92,7 @@ public abstract class AbstractUserServiceTest extends AbstractServiceTest {
         MATCHER.assertEquals(updated, service.get(USER_ID));
     }
 
+    @Ignore
     @Test
     public void testValidation() throws Exception {
         validateRootCause(() -> service.save(new User(null, "  ", "invalid@yandex.ru", "password", Role.ROLE_USER)), ConstraintViolationException.class);
