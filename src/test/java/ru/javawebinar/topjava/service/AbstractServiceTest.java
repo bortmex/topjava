@@ -22,7 +22,6 @@ import ru.javawebinar.topjava.Profiles;
 import java.util.concurrent.TimeUnit;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
-
 /**
  * User: gkislin
  */
