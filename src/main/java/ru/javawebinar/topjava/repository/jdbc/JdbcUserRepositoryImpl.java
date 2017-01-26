@@ -18,8 +18,6 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * User: gkislin
@@ -50,6 +48,15 @@ public class JdbcUserRepositoryImpl implements UserRepository {
     @Override
     @Transactional
     public User save(User user) {
+
+        List<String> roles = jdbcTemplate.queryForList("SELECT ur.role FROM user_roles ur WHERE user_id=?", String.class, user.getId());
+        SortedSet<Role> rolSet = new TreeSet<>();
+        roles.forEach(r -> {
+            rolSet.add(Role.valueOf(r));
+        });
+        user.setRoles(rolSet);
+        if(user.getRoles().size()==0) user.setRoles(null);
+
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", user.getId())
                 .addValue("name", user.getName())
@@ -68,13 +75,6 @@ public class JdbcUserRepositoryImpl implements UserRepository {
                             "registered=:registered, enabled=:enabled, calories_per_day=:caloriesPerDay WHERE id=:id", map);
         }
 
-        List<String> roles = jdbcTemplate.queryForList("SELECT ur.role FROM user_roles ur WHERE user_id=?", String.class, user.getId());
-        SortedSet<Role> rolSet = new TreeSet<>();
-        roles.forEach(r -> {
-            rolSet.add(Role.valueOf(r));
-        });
-            user.setRoles(rolSet);
-        if(user.getRoles().size()==0) user.setRoles(null);
         return user;
     }
 
@@ -113,14 +113,14 @@ public class JdbcUserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> getAll() {
-        Map<Integer, Set<Role>> rolesMap = new ConcurrentHashMap<>();
+        Map<Integer, Set<Role>> rolesMap = new HashMap<>();
         List<Object> usersWithRole = jdbcTemplate.query("SELECT * FROM user_roles",new RowMapper<Object>(){
             @Override
             public Object mapRow(ResultSet rs, int rownumber) throws SQLException {
                 int id = rs.getInt("user_id");
                 Role role = Role.valueOf(rs.getString("role"));
                 if (!rolesMap.containsKey(id))
-                    rolesMap.put(id, new CopyOnWriteArraySet<>());
+                    rolesMap.put(id, new TreeSet<Role>());
                 rolesMap.get(id).add(role);
                 return null;
             }

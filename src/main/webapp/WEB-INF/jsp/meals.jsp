@@ -34,10 +34,10 @@
             <dt><fmt:message key="meals.to_time"/></dt>
             <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
         </dl>
-        <button type="submit">Filter</button>
+        <button type="submit"><fmt:message key="meals.filter"/></button>
     </form>
     <hr>
-    <a href="meal">Meal Add</a>
+    <a href="meal"><fmt:message key="meals.add"/></a>
     <hr>
     <table border="1" cellpadding="8" cellspacing="0">
         <thead>

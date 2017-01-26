@@ -2,30 +2,28 @@ package ru.javawebinar.topjava.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.DateTimeUtil;
-import ru.javawebinar.topjava.web.meal.MealRestController;
+import ru.javawebinar.topjava.web.meal.AbstractMealRestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  * Created by alexa on 24.01.2017.
  */
 @Controller
-public class MealController extends MealRestController{
+public class MealController extends AbstractMealRestController{
 
     @RequestMapping(value = "/meals", method = RequestMethod.GET)
     public String meals(Model model) {
         model.addAttribute("meals", getAll());
-        model.addAttribute("meal", new Meal());
         return "meals";
     }
 
@@ -38,7 +36,6 @@ public class MealController extends MealRestController{
     @RequestMapping("/edit/{id}")
     public String editMeal(@PathVariable("id") int id, Model model){
         model.addAttribute("meal", get(id));
-        model.addAttribute("meals", getAll());
         return "meal";
     }
 
@@ -53,28 +50,29 @@ public class MealController extends MealRestController{
     }
 
     @RequestMapping(value = "meal/add", method = RequestMethod.POST)
-    public String addMeal(@ModelAttribute("meal") Meal meal){
-        if(meal.getId() == null){
-            meal.setDateTime( LocalDateTime.now());
+    public String addMeal(HttpServletRequest request){
+        final Meal meal = new Meal(
+                LocalDateTime.parse(request.getParameter("dateTime")),
+                request.getParameter("description"),
+                Integer.valueOf(request.getParameter("calories")));
+        if(request.getParameter("id").isEmpty()){
             create(meal);
         }else {
-            meal.setDateTime( LocalDateTime.now());
-            update(meal,meal.getUser().getId());
+            update(meal,getId(request));
         }
+        request.setAttribute("meals", getAll());
 
-        return "redirect:/meals";
-    }
-
-    @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public String setUser(HttpServletRequest request) {
-        int userId = Integer.valueOf(request.getParameter("userId"));
-        AuthorizedUser.setId(userId);
-        return "redirect:meals";
+        return "meals";
     }
 
     @RequestMapping("meal")
     public String userData(Model model){
         model.addAttribute("meal", new Meal());
         return "meal";
+    }
+
+    private int getId(HttpServletRequest request) {
+        String paramId = Objects.requireNonNull(request.getParameter("id"));
+        return Integer.valueOf(paramId);
     }
 }

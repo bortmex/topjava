@@ -23,7 +23,8 @@
     <form:form action="${addAction}" commandName="meals">
         <input type="hidden" name="id" value="${meal.id}">
         <dl>
-
+            <dt><fmt:message key="meals.datetime"/>:</dt>
+            <dd><input type="datetime-local" value="${meal.dateTime}" name="dateTime"></dd>
         </dl>
         <dl>
             <dt><fmt:message key="meals.description"/>:</dt>
@@ -36,11 +37,11 @@
         <td colspan="2">
             <c:if test="${!empty meal.id}">
                 <input type="submit"
-                       value="<spring:message text="Edit Meal"/>"/>
+                       value=<fmt:message key="meals.edit"/>/>
             </c:if>
             <c:if test="${empty meal.id}">
                 <input type="submit"
-                       value="<spring:message text="Add Meal"/>"/>
+                       value=<fmt:message key="meals.add"/>/>
             </c:if>
         </td>
         <button onclick="window.history.back()">Cancel</button>
