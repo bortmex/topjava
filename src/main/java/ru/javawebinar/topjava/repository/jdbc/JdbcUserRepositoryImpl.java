@@ -50,7 +50,7 @@ public class JdbcUserRepositoryImpl implements UserRepository {
     public User save(User user) {
 
         List<String> roles = jdbcTemplate.queryForList("SELECT ur.role FROM user_roles ur WHERE user_id=?", String.class, user.getId());
-        SortedSet<Role> rolSet = new TreeSet<>();
+        Set<Role> rolSet = new TreeSet<>();
         roles.forEach(r -> {
             rolSet.add(Role.valueOf(r));
         });
@@ -101,7 +101,7 @@ public class JdbcUserRepositoryImpl implements UserRepository {
 
     public List<User> addRole(List<User> users, int id){
         List<String> roles = jdbcTemplate.queryForList("SELECT ur.role FROM user_roles ur WHERE user_id=?", String.class, id);
-        SortedSet<Role> rolSet = new TreeSet<>();
+        Set<Role> rolSet = new TreeSet<>();
         roles.forEach(r -> {
             rolSet.add(Role.valueOf(r));
         });
