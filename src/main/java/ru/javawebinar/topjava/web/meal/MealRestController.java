@@ -1,15 +1,14 @@
 package ru.javawebinar.topjava.web.meal;
 
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.to.MealWithExceed;
+import ru.javawebinar.topjava.util.DateTimeUtil;
 
 import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -59,8 +58,16 @@ public class MealRestController extends AbstractMealController {
     }
 
 
-    @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+/*    @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<MealWithExceed> getBetween(@RequestParam("startDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime startDateTiem, @RequestParam("endDateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)  LocalDateTime endDateTime) {
         return super.getBetween(startDateTiem.toLocalDate(), startDateTiem.toLocalTime(), endDateTime.toLocalDate(), endDateTime.toLocalTime());
+    }*/
+
+    @GetMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MealWithExceed> getBetween(@RequestParam("startDateTime") String startDateTiem, @RequestParam("endDateTime") String endDateTime) {
+        return super.getBetween(DateTimeUtil.parseLocalDate(startDateTiem.substring(0,startDateTiem.indexOf("T"))),
+                                DateTimeUtil.parseLocalTime(startDateTiem.substring(startDateTiem.indexOf("T")+1, startDateTiem.length())),
+                                DateTimeUtil.parseLocalDate(endDateTime.substring(0,endDateTime.indexOf("T"))),
+                                DateTimeUtil.parseLocalTime(endDateTime.substring(endDateTime.indexOf("T")+1, endDateTime.length())));
     }
 }

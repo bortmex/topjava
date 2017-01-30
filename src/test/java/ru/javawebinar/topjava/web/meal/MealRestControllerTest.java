@@ -77,13 +77,21 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(MATCHERWITHEXCEED.contentListMatcher(MEAL6WITHEXCEED, MEAL5WITHEXCEED, MEAL4WITHEXCEED, MEAL3WITHEXCEED, MEAL2WITHEXCEED, MEAL1WITHEXCEED)));
     }
 
+    /*@Test
+    public void getBetween() throws Exception {
+        TestUtil.print(mockMvc.perform(get(REST_URL + "filter?startDateTime=2015-05-29T08:00:00&endDateTime=2015-05-30T17:00:00"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(MATCHERWITHEXCEED.contentListMatcher(MEAL2WITHEXCEED, MEAL1WITHEXCEED)));
+        *//*MATCHER.assertCollectionEquals(Arrays.asList(MEAL3, MEAL2, MEAL1),
+                mealService.getBetweenDates(LocalDate.of(2015, Month.MAY, 30), LocalDate.of(2015, Month.MAY, 30), AuthorizedUser.id()));*//*
+    }*/
+
     @Test
     public void getBetween() throws Exception {
         TestUtil.print(mockMvc.perform(get(REST_URL + "filter?startDateTime=2015-05-29T08:00:00&endDateTime=2015-05-30T17:00:00"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(MATCHERWITHEXCEED.contentListMatcher(MEAL2WITHEXCEED, MEAL1WITHEXCEED)));
-        /*MATCHER.assertCollectionEquals(Arrays.asList(MEAL3, MEAL2, MEAL1),
-                mealService.getBetweenDates(LocalDate.of(2015, Month.MAY, 30), LocalDate.of(2015, Month.MAY, 30), AuthorizedUser.id()));*/
     }
 }
