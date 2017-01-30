@@ -60,4 +60,5 @@ public class MealServiceImpl implements MealService {
     public Meal getWithUser(int id, int userId) {
         return ValidationUtil.checkNotFoundWithId(repository.getWithUser(id, userId), id);
     }
+
 }
