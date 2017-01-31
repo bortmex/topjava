@@ -12,14 +12,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ResourceControllerTest extends AbstractControllerTest{
 
     @Test
-    public void testGetHomepage() throws Exception { //passing :)
-        this.mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("index"))
-                .andExpect(forwardedUrl("/WEB-INF/jsp/index.jsp"));
-    }
-
-    @Test
     public void testStaticResource() throws Exception {
         this.mockMvc.perform(get("/resources/css/style.css"))
                 .andDo(print())

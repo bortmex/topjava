@@ -17,6 +17,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.topjava.MealTestData.*;
+import static ru.javawebinar.topjava.util.MealsUtil.DEFAULT_CALORIES_PER_DAY;
+import static ru.javawebinar.topjava.util.MealsUtil.getWithExceeded;
 
 /**
  * Created by alexa on 29.01.2017.
@@ -74,24 +76,27 @@ public class MealRestControllerTest extends AbstractControllerTest {
         TestUtil.print(mockMvc.perform(get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHERWITHEXCEED.contentListMatcher(MEAL6WITHEXCEED, MEAL5WITHEXCEED, MEAL4WITHEXCEED, MEAL3WITHEXCEED, MEAL2WITHEXCEED, MEAL1WITHEXCEED)));
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(MEAL6WITHEXCEED, MEAL5WITHEXCEED, MEAL4WITHEXCEED, MEAL3WITHEXCEED, MEAL2WITHEXCEED, MEAL1WITHEXCEED)));
     }
 
-    /*@Test
+/*    @Test
     public void getBetween() throws Exception {
         TestUtil.print(mockMvc.perform(get(REST_URL + "filter?startDateTime=2015-05-29T08:00:00&endDateTime=2015-05-30T17:00:00"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHERWITHEXCEED.contentListMatcher(MEAL2WITHEXCEED, MEAL1WITHEXCEED)));
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(MEAL2WITHEXCEED, MEAL1WITHEXCEED)));
         *//*MATCHER.assertCollectionEquals(Arrays.asList(MEAL3, MEAL2, MEAL1),
                 mealService.getBetweenDates(LocalDate.of(2015, Month.MAY, 30), LocalDate.of(2015, Month.MAY, 30), AuthorizedUser.id()));*//*
     }*/
 
     @Test
     public void getBetween() throws Exception {
-        TestUtil.print(mockMvc.perform(get(REST_URL + "filter?startDateTime=2015-05-29T08:00:00&endDateTime=2015-05-30T17:00:00"))
+        TestUtil.print(mockMvc.perform(get(REST_URL + "filter?startDateTime=" + MEAL1.getDateTime().toString()
+                + "&endDateTime=" + MEAL3.getDateTime().toString()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHERWITHEXCEED.contentListMatcher(MEAL2WITHEXCEED, MEAL1WITHEXCEED)));
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(
+                        getWithExceeded(Arrays.asList(MEAL3, MEAL2, MEAL1), DEFAULT_CALORIES_PER_DAY)
+                )));
     }
 }
