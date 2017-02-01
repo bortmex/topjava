@@ -6,6 +6,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.TestUtil;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.AbstractControllerTest;
 import ru.javawebinar.topjava.web.json.JsonUtil;
 
@@ -47,7 +48,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdate() throws Exception {
-        Meal updated = MEAL1;
+        Meal updated = MEAL1_CLONE;
         updated.setDescription("UpdatedDescription");
         mockMvc.perform(put(REST_URL + MEAL1_ID)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -76,7 +77,9 @@ public class MealRestControllerTest extends AbstractControllerTest {
         TestUtil.print(mockMvc.perform(get(REST_URL))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(MEAL6WITHEXCEED, MEAL5WITHEXCEED, MEAL4WITHEXCEED, MEAL3WITHEXCEED, MEAL2WITHEXCEED, MEAL1WITHEXCEED)));
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(MealsUtil.createWithExceed(MEAL6,true), MealsUtil.createWithExceed(MEAL5,true),
+                                                                  MealsUtil.createWithExceed(MEAL4,true), MealsUtil.createWithExceed(MEAL3,false),
+                                                                  MealsUtil.createWithExceed(MEAL2,false), MealsUtil.createWithExceed(MEAL1,false))));
     }
 
 /*    @Test
@@ -84,7 +87,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
         TestUtil.print(mockMvc.perform(get(REST_URL + "filter?startDateTime=2015-05-29T08:00:00&endDateTime=2015-05-30T17:00:00"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(MEAL2WITHEXCEED, MEAL1WITHEXCEED)));
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(MEAL2_WITH_EXCEED, MEAL1_WITH_EXCEED)));
         *//*MATCHER.assertCollectionEquals(Arrays.asList(MEAL3, MEAL2, MEAL1),
                 mealService.getBetweenDates(LocalDate.of(2015, Month.MAY, 30), LocalDate.of(2015, Month.MAY, 30), AuthorizedUser.id()));*//*
     }*/
