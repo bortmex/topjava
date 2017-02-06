@@ -34,7 +34,7 @@
                     </thead>
                     <c:forEach items="${users}" var="user">
                         <jsp:useBean id="user" scope="page" type="ru.javawebinar.topjava.model.User"/>
-                        <tr <c:url var="userId" value="${user.id}"/>>
+                        <tr <c:url var="userId" value="${user.id}"/> class="${user.enabled ? 'normal' : 'exceeded'}"<c:url var="mealId" value="${userId}"/>>
                             <td><c:out value="${user.name}"/></td>
                             <td><a href="mailto:${user.email}">${user.email}</a></td>
                             <td>${user.roles}</td>
@@ -85,7 +85,13 @@
                             <input type="email" class="form-control" id="email" name="email" placeholder="<spring:message code="users.email"/>">
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="enabled" class="control-label col-xs-3"><spring:message code="users.active"/></label>
+                        <div class="col-md-1">
+                            <input  name="enabled" type="hidden" value="false" >
+                            <input type="checkbox"  class="form-control" id="enabled" name="enabled" placeholder="<spring:message code="users.active"/>">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="password" class="control-label col-xs-3"><spring:message code="users.password"/></label>
 
