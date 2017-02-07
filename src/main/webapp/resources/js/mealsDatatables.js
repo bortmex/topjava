@@ -1,13 +1,21 @@
 var ajaxUrl = 'ajax/meals/';
 var datatableApi;
 
+function filterClear() {
+    $('#startDate').val(null);
+    $('#startTime').val(null);
+    $('#endDate').val(null);
+    $('#endTime').val(null);
+    updateTable();
+}
+
 
 function filterTable() {
     $.ajax({
         type: "POST",
         url: ajaxUrl + 'filter',
         data: $('#filter').serialize(),
-        success: datatableApi.clear().rows.add(data).draw()
+        success: updateTableByData
     });
 }
 
@@ -18,7 +26,7 @@ $(function () {
         "info": true,
         "columns": [
             {
-                "data": "date_time"
+                "data": "dateTime"
             },
             {
                 "data": "description"
@@ -43,4 +51,7 @@ $(function () {
         ]
     });
     makeEditable();
+    $('#dateTime').datetimepicker({
+        format: 'Y-m-d H:i'
+    });
 });

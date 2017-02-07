@@ -14,7 +14,7 @@
         <div class="shadow">
             <h3><spring:message code="meals.title"/></h3>
 
-            <form id="filter" role="form" class="form-horizontal" method="post" action="meals">
+            <form id="filter" role="form" class="form-horizontal" method="post" action="/meals">
 
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="startDate"><spring:message
@@ -47,6 +47,8 @@
                 <div class="form-group">
                     <div class="col-sm-6"></div>
                     <div class="col-sm-1">
+                        <button class="btn btn-primary" type="button" onclick="filterClear()"><spring:message
+                                code="meals.clear"/></button>
                         <button class="btn btn-primary" type="button" onclick="filterTable()"><spring:message
                                 code="meals.filter"/></button>
                     </div>
@@ -105,12 +107,17 @@
                     <input type="text" hidden="hidden" id="id" name="id">
 
                     <div class="form-group">
-                        <label for="date_time" class="control-label col-xs-3"><spring:message
+                        <label for="dateTime" class="control-label col-xs-3"><spring:message
                                 code="meals.dateTime"/></label>
 
                         <div class="col-xs-9">
-                            <input type="datetime-local" class="form-control" id="date_time" name="date_time"
+                            <input list="dateList" class="form-control" id="dateTime" name="dateTime"
                                    placeholder="<spring:message code="meals.dateTime"/>">
+                            <datalist id="dateList">
+                                <option value="2016-12-06 23:01" label="Пример ввода даты №1">
+                                <option value="2017-12-06 23:01" label="Пример ввода даты №2">
+                                <option value="2018-12-06 23:01" label="Пример ввода даты №3">
+                            </datalist>
                         </div>
                     </div>
 

@@ -13,6 +13,10 @@ function makeEditable() {
     });
 }
 
+function updateTableByData(data) {
+    datatableApi.clear().rows.add(data).draw();
+}
+
 function add() {
     $('#id').val(null);
     $('#editRow').modal();
