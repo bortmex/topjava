@@ -18,7 +18,7 @@ function updateTableByData(data) {
 }
 
 function add() {
-    $('#id').val(null);
+     $('#id').val(null);
     $('#editRow').modal();
 }
 
@@ -51,7 +51,7 @@ function save() {
         data: form.serialize(),
         success: function () {
             $('#editRow').modal('hide');
-            updateTable();
+            filterTable();
             successNoty('Saved');
         }
     });

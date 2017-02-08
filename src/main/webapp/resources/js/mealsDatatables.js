@@ -2,10 +2,7 @@ var ajaxUrl = 'ajax/meals/';
 var datatableApi;
 
 function filterClear() {
-    $('#startDate').val(null);
-    $('#startTime').val(null);
-    $('#endDate').val(null);
-    $('#endTime').val(null);
+    $('#filter').trigger("reset");
     updateTable();
 }
 
@@ -51,6 +48,7 @@ $(function () {
         ]
     });
     makeEditable();
+
     $('#dateTime').datetimepicker({
         format: 'Y-m-d H:i'
     });
