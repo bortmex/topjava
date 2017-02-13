@@ -87,7 +87,7 @@
                             <td>${meal.description}</td>
                             <td>${meal.calories}</td>
                             <td><a class="btn btn-xs btn-primary">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-pencil" onclick="updateRow(${meal.id})"></span>
                             </a></td>
                             <td><a class="btn btn-xs btn-danger" onclick="deleteRow(${meal.id})">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
