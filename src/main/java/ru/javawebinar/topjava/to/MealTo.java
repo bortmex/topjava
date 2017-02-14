@@ -24,8 +24,9 @@ public class MealTo implements Serializable {
     @Size(min = 3, max = 32, message = " must between 3 and 32 characters")
     private String description;
 
+    @NotNull
     @Range(min = 10, max = 5000)
-    private int calories;
+    private Integer calories;
 
     public MealTo() {
     }
