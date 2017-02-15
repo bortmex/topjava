@@ -28,10 +28,7 @@ $(function () {
             {
                 "data": "dateTime",
                 "render": function (date, type, row) {
-                    if (type == 'display') {
-                        return '<span>' + date.substring(0, 10) + '</span>';
-                    }
-                    return date;
+                    return date.substring(0, 16).replace("T"," ");
                 }
             },
             {

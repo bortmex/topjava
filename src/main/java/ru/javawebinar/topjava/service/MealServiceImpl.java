@@ -8,12 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
-import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.MealRepository;
-import ru.javawebinar.topjava.to.MealTo;
-import ru.javawebinar.topjava.to.UserTo;
 import ru.javawebinar.topjava.util.MealUtil;
-import ru.javawebinar.topjava.util.UserUtil;
 import ru.javawebinar.topjava.util.ValidationUtil;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
@@ -58,16 +54,9 @@ public class MealServiceImpl implements MealService {
     }
 
     @CacheEvict(value = "meals", allEntries = true)
-    @Override
-    public Meal update(Meal meal, int userId) {
-        Assert.notNull(meal, "meal must not be null");
-        return checkNotFoundWithId(repository.save(meal, userId), meal.getId());
-    }
-
-    @CacheEvict(value = "meals", allEntries = true)
     @Transactional
     @Override
-    public Meal update(MealTo mealTo, int userId) throws NotFoundException {
+    public Meal update(Meal mealTo, int userId) throws NotFoundException {
         Meal meal = get(mealTo.getId(), userId);
         return repository.save(MealUtil.updateFromTo(meal,mealTo),AuthorizedUser.id());
     }

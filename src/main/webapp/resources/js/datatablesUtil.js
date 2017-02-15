@@ -19,6 +19,7 @@ function updateRow(id) {
     $('#modalTitle').html(editTitle);
     $.get(ajaxUrl + id, function (data) {
         $.each(data, function (key, value) {
+            if (key=="dateTime") value = value.substring(0, 16).replace("T"," ");
             form.find("input[name='" + key + "']").val(value);
         });
         $('#editRow').modal();
@@ -90,7 +91,26 @@ function renderEditBtn(data, type, row) {
 
 function renderDeleteBtn(data, type, row) {
     if (type == 'display') {
-        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">'+
+        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">' +
             '<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
     }
 }
+
+
+
+$('.datetimepicker').datetimepicker({
+    format: 'Y-m-d H:i',
+    theme:'dark'
+});
+$('.datepicker').datetimepicker({
+    timepicker: false,
+    format: 'Y-m-d',
+    theme:'dark'
+});
++$('.timepicker').datetimepicker({
+    datepicker: false,
+    format: 'H:i',
+    theme:'dark'
+});
+
+

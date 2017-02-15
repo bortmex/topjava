@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -37,6 +38,7 @@ public class Meal extends BaseEntity {
 
     @Column(name = "description", nullable = false)
     @NotBlank
+    @Size(min = 3, max = 32, message = " must between 3 and 32 characters")
     private String description;
 
     @Column(name = "calories", nullable = false)
