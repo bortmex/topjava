@@ -25,14 +25,14 @@
                                         code="meals.startDate"/>:</label>
 
                                 <div class="col-sm-4">
-                                    <input class="form-control datepicker" type="date" name="startDate" id="startDate">
+                                    <input class="form-control datepicker" name="startDate" id="startDate">
                                 </div>
 
                                 <label class="control-label col-sm-3" for="startTime"><spring:message
                                         code="meals.startTime"/>:</label>
 
                                 <div class="col-sm-3">
-                                    <input class="form-control timepicker" type="time" name="startTime" id="startTime">
+                                    <input class="form-control timepicker" name="startTime" id="startTime">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -40,14 +40,14 @@
                                         code="meals.endDate"/>:</label>
 
                                 <div class="col-sm-4">
-                                    <input class="form-control datepicker" type="date" name="endDate" id="endDate">
+                                    <input class="form-control datepicker" name="endDate" id="endDate">
                                 </div>
 
                                 <label class="control-label col-sm-3" for="endTime"><spring:message
                                         code="meals.endTime"/>:</label>
 
                                 <div class="col-sm-3">
-                                    <input class="form-control timepicker" type="time" name="endTime" id="endTime">
+                                    <input class="form-control timepicker" name="endTime" id="endTime">
                                 </div>
                             </div>
                         </form>
@@ -117,7 +117,7 @@
                                 code="meals.dateTime"/></label>
 
                         <div class="col-xs-9">
-                            <input type="datetime" class="form-control datetimepicker" id="dateTime" name="dateTime"
+                            <input class="form-control datetimepicker" id="dateTime" name="dateTime"
                                    placeholder="<spring:message code="meals.dateTime"/>">
                         </div>
                     </div>
