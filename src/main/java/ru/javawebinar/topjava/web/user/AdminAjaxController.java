@@ -1,8 +1,6 @@
 package ru.javawebinar.topjava.web.user;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.User;
@@ -11,6 +9,7 @@ import ru.javawebinar.topjava.util.UserUtil;
 import ru.javawebinar.topjava.util.ValidationUtil;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 import java.util.List;
 
 /**
@@ -39,21 +38,25 @@ public class AdminAjaxController extends AbstractUserController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createOrUpdate(@Valid UserTo userTo, BindingResult result) {
+    public void createOrUpdate(@Valid UserTo userTo, BindingResult result) {
         if (result.hasErrors()) {
-            // TODO change to exception handler
-            return ValidationUtil.getErrorResponse(result);
+            throw new ValidationException(ValidationUtil.getErrorResponse(result).getBody());
         }
         if (userTo.isNew()) {
             super.create(UserUtil.createNewFromTo(userTo));
         } else {
-            super.update(userTo);
+            update(userTo);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/{id}")
     public void enabled(@PathVariable("id") int id, @RequestParam("enabled") boolean enabled) {
         super.enable(id, enabled);
+    }
+
+    @Override
+    public void update(UserTo userTo) {
+        log.info("update " + userTo);
+        service.update(userTo);
     }
 }
