@@ -47,6 +47,7 @@
                             <user name="admin@gmail.com" password="admin" authorities="ROLE_ADMIN"/>
                         </user-service>
             -->
+
         </authentication-provider>
     </authentication-manager>
 </beans:beans>
