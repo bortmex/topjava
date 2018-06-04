@@ -22,15 +22,15 @@
 
                 <table class="table table-striped display" id="datatable">
                     <thead>
-                    <tr>
-                        <th><spring:message code="users.name"/></th>
-                        <th><spring:message code="users.email"/></th>
-                        <th><spring:message code="users.roles"/></th>
-                        <th><spring:message code="users.active"/></th>
-                        <th><spring:message code="users.registered"/></th>
-                        <th></th>
-                        <th></th>
-                    </tr>
+                        <tr>
+                            <th><spring:message code="users.name"/></th>
+                            <th><spring:message code="users.email"/></th>
+                            <th><spring:message code="users.roles"/></th>
+                            <th><spring:message code="users.active"/></th>
+                            <th><spring:message code="users.registered"/></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
                     </thead>
                 </table>
             </div>
